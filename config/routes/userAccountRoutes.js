@@ -77,17 +77,6 @@ module.exports={
 		action:'GetListUsers'
 	},
 
-	
-
-	'post /api/login':{
-		controller:'UserAccount/v0_1/AuthController',
-    	action:'login'
-	},
-
-	'get /api/logout':{
-		controller:'UserAccount/v0_1/AuthController',
-		action:'logout'
-	},
 
 	'get /api/user-account/find-by-phone':{
 		controller:'UserAccount/v0_1/UserAccountController',
