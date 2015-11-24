@@ -61,7 +61,7 @@ module.exports={
 	RedisService:service_RedisService,
 	RedisWrap:service_RedisWrap,
 	SendMailService:service_SendMailService,
-	SendSMSService:service_SendSMSService,
+	// SendSMSService:service_SendSMSService,
 	UUIDService:service_UUIDService,
 	//SERVICE END
 	
