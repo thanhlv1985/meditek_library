@@ -22,7 +22,7 @@ var service_HelperService=require("./api/services/HelperService");
 var service_RedisService=require("./api/services/RedisService");
 var service_RedisWrap=require("./api/services/RedisWrap");
 var service_SendMailService=require("./api/services/SendMailService");
-var service_SendSMSService=require("./api/services/SendSMSService");
+//var service_SendSMSService=require("./api/services/SendSMSService");
 var service_UUIDService=require("./api/services/UUIDService");
 //SERVICE
 
