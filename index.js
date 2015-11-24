@@ -15,10 +15,14 @@ var policy_setExposeHeaders=require("./api/policies/setExposeHeaders");
 //POLICIES
 
 //SERVICE
+var service_api=require("./api/services/api");
+var service_APIService=require("./api/services/APIService");
 var service_ErrorWrap=require("./api/services/ErrorWrap");
 var service_HelperService=require("./api/services/HelperService");
 var service_RedisService=require("./api/services/RedisService");
 var service_RedisWrap=require("./api/services/RedisWrap");
+var service_SendMailService=require("./api/services/SendMailService");
+var service_SendSMSService=require("./api/services/SendSMSService");
 var service_UUIDService=require("./api/services/UUIDService");
 //SERVICE
 
@@ -50,10 +54,14 @@ module.exports={
 	//POLICIES END
 	
 	//SERVICE BEGIN
+	api:service_api,
+	APIService:service_APIService,
 	ErrorWrap:service_ErrorWrap,
 	HelperService:service_HelperService,
 	RedisService:service_RedisService,
 	RedisWrap:service_RedisWrap,
+	SendMailService:service_SendMailService,
+	SendSMSService:service_SendSMSService,
 	UUIDService:service_UUIDService,
 	//SERVICE END
 	
