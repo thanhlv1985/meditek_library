@@ -3,7 +3,6 @@ var jwt = require('jsonwebtoken');
 var secret = 'ewfn09qu43f09qfj94qf*&H#(R';
 var o=require("../services/HelperService");
 var ErrorWrap=require("../services/ErrorWrap");
-var UserTokenService=require("../services/UserAccount/UserToken");
 var jwt = require('jsonwebtoken');
 var moment = require('moment');
 /**

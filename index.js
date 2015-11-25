@@ -36,6 +36,14 @@ var response_ok=require("./api/responses/ok");
 var response_serverError=require("./api/responses/serverError");
 var response_unauthor=require("./api/responses/unauthor");
 //RESPONSES
+
+
+//CONTROLLER
+/*var controller_UserRoleController=require("./api/controllers/Authorization/v0_1/UserRoleController");
+var controller_RefreshTokenController=require("./api/controllers/UserAccount/v0_1/RefreshTokenController");
+var controller_UserAccountController=require("./api/controllers/UserAccount/v0_1/UserAccountController");
+var controller_UserActivationController=require("./api/controllers/UserAccount/v0_1/UserActivationController");*/
+//CONTROLLER
 module.exports={
 	//POLICIES BEGIN
 	checkCookieToken:policy_checkCookieToken,
@@ -75,4 +83,11 @@ module.exports={
 	serverError:response_serverError,
 	unauthor:response_unauthor,
 	//RESPONSES END
+	
+	//CONTROLLER BEGIN
+	/*UserRoleController:controller_UserRoleController,
+	RefreshTokenController:controller_RefreshTokenController,
+	UserAccountController:controller_UserAccountController,
+	UserActivationController:controller_UserActivationController,*/
+	//CONTROLLER END
 }
