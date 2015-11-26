@@ -107,12 +107,21 @@ module.exports = function(req, res, next) {
 						//Nếu là lỗi token quá hạn
 						if(err.name=='TokenExpiredError')
 						{ 
+							console.log("============================TOKEN EXPIRE HANDLE");
 							//Kiểm tra secret key có quá hạn hay chưa
 							var payload=jwt.decode(token);
+							console.log("============================PAYLOAD");
+							console.log(payload);
 							if(!o.isExpired(sessionUser.SecretCreatedAt,sessionUser.SecretExpired))
 							{
 								Services.RefreshToken.GetRefreshToken(userAccess)
 								.then(function(rt){
+									console.log("============================REFRESH TOKEN DB DATA");
+									console.log(rt.dataValues);
+									console.log("============================MD5 OLD CODE:");
+									console.log(o.md5(rt.OldCode));
+									console.log("============================TOKEN EXPIRE HANDLE");
+									console.log(o.md5(rt.RefreshCode));
 									if(payload.RefreshCode==o.md5(rt.OldCode))
 									{
 										console.log("PAYLOAD WITH OLD REFRESH_CODE");
