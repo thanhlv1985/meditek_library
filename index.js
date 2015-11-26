@@ -24,6 +24,7 @@ var service_RedisWrap=require("./api/services/RedisWrap");
 var service_SendMailService=require("./api/services/SendMailService");
 //var service_SendSMSService=require("./api/services/SendSMSService");
 var service_UUIDService=require("./api/services/UUIDService");
+var service_RefreshToken=require("./api/services/UserAccount/RefreshToken");
 //SERVICE
 
 //RESPONSES
@@ -71,6 +72,7 @@ module.exports={
 	SendMailService:service_SendMailService,
 	// SendSMSService:service_SendSMSService,
 	UUIDService:service_UUIDService,
+	RefreshToken:service_RefreshToken,
 	//SERVICE END
 	
 	//RESPONSES BEGIN
