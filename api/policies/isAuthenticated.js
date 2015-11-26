@@ -138,7 +138,7 @@ module.exports = function(req, res, next) {
 											//hoặc bị ngắt internet thì sau đó vẫn cho phép request
 											//yêu cầu new token được chạy
 											if(req.path==o.const.refreshCodePath 
-												&& rt.status==o.const.refreshTokenStatus.waitget)
+												&& rt.Status==o.const.refreshTokenStatus.waitget)
 											{
 												extendSecretExpired();
 												next();
@@ -155,7 +155,7 @@ module.exports = function(req, res, next) {
 										console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
 										Services.RefreshToken.CreateNewRefreshCode(userAccess,payload.RefreshCode)
 										.then(function(result){
-											if(result.status=='created')
+											if(result.status=='created' || result.status=='waitget')
 											{
 												res.set('requireupdatetoken',true);
 												res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
