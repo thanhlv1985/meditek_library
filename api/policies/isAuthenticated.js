@@ -152,34 +152,39 @@ module.exports = function(req, res, next) {
 									}
 									else if(payload.RefreshCode==o.md5(rt.RefreshCode))
 									{
-										/*if(rt.Status==o.const.refreshTokenStatus.waitget)
+										if(rt.Status==o.const.refreshTokenStatus.waitget)
 										{
-											
+											Services.RefreshToken.UpdateStatus(userAccess,o.const.refreshTokenStatus.got)
+											.then(function(result){
+												extendSecretExpired();
+												next();
+											},function(err){
+												return res.unauthor(ErrorWrap(err));
+											})
 										}
 										else
 										{
-											
-										}*/
-										console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
-										Services.RefreshToken.CreateNewRefreshCode(userAccess,payload.RefreshCode)
-										.then(function(result){
-											if(result.status=='created' || result.status=='waitget')
-											{
-												res.set('requireupdatetoken',true);
-												res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
-												// res.set('newtoken',newtoken);
-												// res.header('Access-Control-Expose-Headers', 'newtoken');
-												extendSecretExpired();
-												next();
-											}
-											else
-											{
-												extendSecretExpired();
-												next();
-											}
-										},function(err){
-											return res.unauthor(ErrorWrap(err));
-										})
+											console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
+											Services.RefreshToken.CreateNewRefreshCode(userAccess,payload.RefreshCode)
+											.then(function(result){
+												if(result.status=='created' || result.status=='waitget')
+												{
+													res.set('requireupdatetoken',true);
+													res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
+													// res.set('newtoken',newtoken);
+													// res.header('Access-Control-Expose-Headers', 'newtoken');
+													extendSecretExpired();
+													next();
+												}
+												else
+												{
+													extendSecretExpired();
+													next();
+												}
+											},function(err){
+												return res.unauthor(ErrorWrap(err));
+											})
+										}
 									}
 									else
 									{

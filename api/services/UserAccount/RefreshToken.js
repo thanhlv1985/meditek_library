@@ -447,7 +447,15 @@ module.exports={
 						transaction:transaction,
 					})
 					.then(function(result){
-						return result;
+						if(result && result[0] && result[0]>0)
+						{
+							return result;
+						}
+						else
+						{
+							error.pushError("refreshTokenStatus.noRowUpdate");
+							throw error;
+						}
 					},function(err){
 						console.log(err);
 						error.pushError("refreshToken.updateError");
