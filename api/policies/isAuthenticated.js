@@ -152,6 +152,14 @@ module.exports = function(req, res, next) {
 									}
 									else if(payload.RefreshCode==o.md5(rt.RefreshCode))
 									{
+										/*if(rt.Status==o.const.refreshTokenStatus.waitget)
+										{
+											
+										}
+										else
+										{
+											
+										}*/
 										console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
 										Services.RefreshToken.CreateNewRefreshCode(userAccess,payload.RefreshCode)
 										.then(function(result){

@@ -420,5 +420,56 @@ module.exports={
 		})
 	},
 
+	UpdateStatus:function(userAccess, status, transaction)
+	{
+		var error=new Error("UpdateStatus.Error");
+		var statusAccept=[o.const.refreshTokenStatus.waitget,o.const.refreshTokenStatus.got];
+		if(statusAccept.indexOf(status)<0)
+		{
+			error.pushError("status.invalid");
+			throw error;
+		}
+		return Validation(userAccess)
+		.then(function(data){
+			return Services.UserAccount.GetUserAccountDetails({UID:userAccess.UserUID},null,transaction)
+			.then(function(user){
+				if(o.checkData(user))
+				{
+					return RefreshToken.update({
+						Status:status,
+					},{
+						where:{
+							UserAccountID:user.ID,
+							SystemType:userAccess.SystemType,
+							DeviceID:userAccess.DeviceID||null,
+							AppID:userAccess.AppID||null,
+						},
+						transaction:transaction,
+					})
+					.then(function(result){
+						return result;
+					},function(err){
+						console.log(err);
+						error.pushError("refreshToken.updateError");
+						throw error;
+					})
+				}
+				else
+				{
+					error.pushError("user.notFound");
+					throw error;
+				}
+			},function(err){
+				console.log(err);
+				error.pushError("user.queryError");
+				throw error;
+			})
+			
+		},function(err){
+			throw err;
+		})
+		
+	},
+
 	
 }
