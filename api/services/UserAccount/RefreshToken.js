@@ -350,46 +350,53 @@ module.exports={
 							}
 							else
 							{
-								return RefreshToken.update({
-									OldCode:currentRefreshToken.RefreshCode,
-									OldCodeExpiredAt:moment()
-													.add(o.const.oldRefreshCodeExpired,'seconds')
-													.toDate(),
-									RefreshCode:UUIDService.Create(),
-									Status:o.const.refreshTokenStatus.waitget,
-								},{
-									where:{
-										UserAccountID:user.ID,
-										SystemType:userAccess.SystemType,
-										DeviceID:userAccess.DeviceID||null,
-										AppID:userAccess.AppID||null,
-										Status:o.const.refreshTokenStatus.got,
-									},
-									transaction:transaction,
-								})
-								.then(function(result){
-									if(result[0]>0)
-									{
-										return {status:'created'};
-									}
-									else
-									{
-										return {status:'unnecessary'};
-									}
-								},function(err){
-									o.exlog(err);
-									error.pushError("refreshToken.updateError");
-									throw error;
-								})
-								/*if(currentRefreshToken.Status==o.const.refreshTokenStatus.waitget)
+								if(o.md5(currentRefreshToken.RefreshCode)==payloadRefreshCode
+									&& currentRefreshToken.Status==o.const.refreshTokenStatus.waitget)
 								{
-									return {status:'waitget'};
+									Services.RefreshToken.UpdateStatus(userAccess,o.const.refreshTokenStatus.got,transaction)
+									.then(function(result){
+										return {status:'unnecessary'}; 
+									},function(err){
+										console.log(err);
+										error.pushError("refreshToken.updateStatusError");
+										throw error;
+									})
+
 								}
 								else
 								{
-									
-								}*/
-								
+									return RefreshToken.update({
+										OldCode:currentRefreshToken.RefreshCode,
+										OldCodeExpiredAt:moment()
+														.add(o.const.oldRefreshCodeExpired,'seconds')
+														.toDate(),
+										RefreshCode:UUIDService.Create(),
+										Status:o.const.refreshTokenStatus.waitget,
+									},{
+										where:{
+											UserAccountID:user.ID,
+											SystemType:userAccess.SystemType,
+											DeviceID:userAccess.DeviceID||null,
+											AppID:userAccess.AppID||null,
+											Status:o.const.refreshTokenStatus.got,
+										},
+										transaction:transaction,
+									})
+									.then(function(result){
+										if(result[0]>0)
+										{
+											return {status:'created'};
+										}
+										else
+										{
+											return {status:'unnecessary'};
+										}
+									},function(err){
+										o.exlog(err);
+										error.pushError("refreshToken.updateError");
+										throw error;
+									})
+								}
 							}							
 						}
 						else
