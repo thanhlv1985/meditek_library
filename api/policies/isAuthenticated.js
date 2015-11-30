@@ -170,7 +170,8 @@ module.exports = function(req, res, next) {
 												if(result.status=='created' || result.status=='waitget')
 												{
 													res.set('requireupdatetoken',true);
-													res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
+													// res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
+													res.header('Access-Control-Expose-Headers', o.const.exposeHeaders);
 													// res.set('newtoken',newtoken);
 													// res.header('Access-Control-Expose-Headers', 'newtoken');
 													extendSecretExpired();
@@ -234,7 +235,32 @@ module.exports = function(req, res, next) {
 	}
 	else
 	{
-		error.pushError("isAuthenticated.notAuthenticated");
-		return res.unauthor(ErrorWrap(error));
+		if(req.headers.systemtype==o.const.systemType.website
+			&& req.cookies && req.cookies.userInfo)
+		{
+			var userInfo=JSON.parse(req.cookies.userInfo);
+			RedisService.checkCurrentAccessWeb(userInfo.UID)
+			.then(function(result){
+				if(result.status=='exist')
+				{
+					error.pushError("isAuthenticated.someoneElseLoggedIn");
+					return res.unauthor(ErrorWrap(error));
+				}
+				else
+				{
+					error.pushError("isAuthenticated.notAuthenticated");
+					return res.unauthor(ErrorWrap(error));
+				}
+			},function(err){
+				error.pushError("isAuthenticated.notAuthenticated");
+				return res.unauthor(ErrorWrap(error));
+			})
+			
+		}
+		else
+		{
+			error.pushError("isAuthenticated.notAuthenticated");
+			return res.unauthor(ErrorWrap(error));
+		}
 	}
 };

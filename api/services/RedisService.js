@@ -60,5 +60,32 @@ module.exports={
 		.then(function(vals){
 			console.log(vals);
 		})
+	},
+
+	checkCurrentAccessWeb:function(uid)
+	{
+		var error=new Error("checkCurrentAccessWeb.Error");
+		if(!o.checkData(uid))
+		{
+			error.pushError("uid.notProvided");
+			throw error;
+		}
+		
+		var key=userConnectKeyPrefix+uid;
+		var hashKey=concatp(o.const.systemType.website);
+
+		return redis.hget(key,hashKey)
+		.then(function(obj){
+			if(o.checkData(obj))
+			{
+				return {status:'exist'};
+			}
+			else
+			{
+				return {status:'notExist'};
+			}
+		},function(err){
+			throw err;
+		})
 	}
 }

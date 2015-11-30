@@ -78,7 +78,7 @@ module.exports.cors = {
 
     headers: 'content-type, authorization, systemtype, deviceid, appid',
 
-    // exposeHeaders:'filename,filetype', //TODO
+    // exposeHeaders:'filename,requireupdatetoken', //TODO
 
     /**
      * Security level 1 (high) will respond with a 403 status code to any request 

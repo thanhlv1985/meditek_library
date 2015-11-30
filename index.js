@@ -45,6 +45,7 @@ var controller_RefreshTokenController=require("./api/controllers/UserAccount/v0_
 var controller_UserAccountController=require("./api/controllers/UserAccount/v0_1/UserAccountController");
 var controller_UserActivationController=require("./api/controllers/UserAccount/v0_1/UserActivationController");*/
 //CONTROLLER
+
 module.exports={
 	//POLICIES BEGIN
 	checkCookieToken:policy_checkCookieToken,
