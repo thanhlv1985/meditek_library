@@ -19,6 +19,7 @@ var concatp=function()
 module.exports={
 	pushUserConnect:function(connectInfo)
 	{
+		o.exlog("REDIS SERVICE-> pushUserConnect");
 		var key=userConnectKeyPrefix+connectInfo.UserUID;
 		var hashKey=concatp(connectInfo.SystemType,connectInfo.DeviceID,connectInfo.AppID);
 		return redis.hget(key,hashKey)
@@ -43,6 +44,7 @@ module.exports={
 
 	removeUserConnect:function(connectInfo)
 	{
+		o.exlog("REDIS SERVICE-> removeUserConnect");
 		var key=userConnectKeyPrefix+connectInfo.UserUID;
 		var hashKey=concatp(connectInfo.SystemType,connectInfo.DeviceID,connectInfo.AppID);
 		return redis.hdel(key,hashKey)
@@ -55,6 +57,7 @@ module.exports={
 
 	getUserConnects:function(uid,connectInfo)
 	{
+		o.exlog("REDIS SERVICE-> getUserConnects");
 		var key=userConnectKeyPrefix+uid;
 		return redis.hkeysvals(key)
 		.then(function(vals){
@@ -64,6 +67,7 @@ module.exports={
 
 	checkCurrentAccessWeb:function(uid)
 	{
+		o.exlog("REDIS SERVICE-> checkCurrentAccessWeb");
 		var error=new Error("checkCurrentAccessWeb.Error");
 		if(!o.checkData(uid))
 		{

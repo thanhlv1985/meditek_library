@@ -8,7 +8,7 @@ var $q=require("q");
 var redis=require("redis");
 var client = redis.createClient();
 client.on("error", function (err) {
-    console.log("uh oh", err);
+    console.log("REDIS ERROR", err);
 });
 
 var logHeader="REDIS LOG: ";
