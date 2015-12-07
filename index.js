@@ -65,7 +65,7 @@ module.exports={
 	//POLICIES END
 	
 	//SERVICE BEGIN
-	Services:service_s;
+	Services:service_s,
 	api:service_api,
 	APIService:service_APIService,
 	ErrorWrap:service_ErrorWrap,
