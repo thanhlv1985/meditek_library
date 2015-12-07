@@ -15,6 +15,7 @@ var policy_setExposeHeaders=require("./api/policies/setExposeHeaders");
 //POLICIES
 
 //SERVICE
+var service_s=require("./api/services/Services");
 var service_api=require("./api/services/api");
 var service_APIService=require("./api/services/APIService");
 var service_ErrorWrap=require("./api/services/ErrorWrap");
@@ -64,6 +65,7 @@ module.exports={
 	//POLICIES END
 	
 	//SERVICE BEGIN
+	Services:service_s;
 	api:service_api,
 	APIService:service_APIService,
 	ErrorWrap:service_ErrorWrap,
