@@ -26,6 +26,7 @@ var service_SendMailService=require("./api/services/SendMailService");
 //var service_SendSMSService=require("./api/services/SendSMSService");
 var service_UUIDService=require("./api/services/UUIDService");
 var service_RefreshToken=require("./api/services/UserAccount/RefreshToken");
+var service_logging = require('./api/services/LoggingService');
 //SERVICE
 
 //RESPONSES
@@ -76,6 +77,7 @@ module.exports={
 	// SendSMSService:service_SendSMSService,
 	UUIDService:service_UUIDService,
 	RefreshToken:service_RefreshToken,
+	LoggingService: service_logging,
 	//SERVICE END
 	
 	//RESPONSES BEGIN
