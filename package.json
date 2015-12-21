@@ -1,7 +1,11 @@
 {
   "name": "meditek_library",
   "private": true,
+<<<<<<< HEAD
   "version": "0.0.2",
+=======
+  "version": "0.0.3",
+>>>>>>> 8f55e38ac9adbfa61e3f8b7a8890fbd9154f700c
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
