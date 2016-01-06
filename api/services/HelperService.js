@@ -298,7 +298,7 @@ module.exports = {
             signature: 'Signature'
         },
 
-        imageExt: ['jpg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
+        imageExt: ['jpg','jpeg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
 
         verificationCodeLength: 6,
 
