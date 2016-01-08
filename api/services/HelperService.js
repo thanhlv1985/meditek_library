@@ -295,7 +295,8 @@ module.exports = {
             image: 'MedicalImage',
             document: 'MedicalDocument',
             avatar: 'ProfileImage',
-            signature: 'Signature'
+            signature: 'Signature',
+            drawing:'MedicalDrawing'
         },
 
         imageExt: ['jpg','jpeg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
