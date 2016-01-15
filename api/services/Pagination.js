@@ -207,7 +207,7 @@ module.exports = function(data, primaryKeyModel) {
                                     primaryKeyModel.name === keyModel) {
                                     tempOrder = [keyOrder, order[keyModel][keyOrder]];
                                 } else {
-                                    tempOrder = [primaryKeyModel, keyOrder, order[keyModel][keyOrder]];
+                                    tempOrder = [sails.models[keyModel.toLowerCase()], keyOrder, order[keyModel][keyOrder]];
                                 }
                                 pagination.order.push(tempOrder);
                             }
