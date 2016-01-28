@@ -219,6 +219,6 @@ module.exports = function(data, primaryKeyModel) {
         }
         return pagination;
     } else {
-        return false;
+        return [];
     }
 };
