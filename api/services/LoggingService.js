@@ -6,16 +6,7 @@ module.exports = function(request) {
     if (HelperService.CheckExistData(request) &&
         HelperService.CheckExistData(request.options)) {
         var data = null;
-        var IP = (request.headers && request.headers['X-Client-IP']) ||
-            (request.headers && request.headers['X-Forwarded-For']) ||
-            (request.headers && request.headers['X-Real-IP']) ||
-            (request.headers && request.headers['X-Cluster-Client-IP']) ||
-            (request.headers && request.headers['X-Forwared']) ||
-            (request.headers && request.headers['X-Forwared-For']) ||
-            (request.headers && request.headers['X-Forwared']) ||
-            (request.connection && request.connection.remoteAddress) ||
-            (request.socket && request.socket.remoteAddress) ||
-            (request.connection && request.connection.socket.remoteAddress);
+        var IP = (request ? request.ip : null);
         if (request.method === 'POST' &&
             HelperService.CheckExistData(request.body)) {
             data = request.body;
