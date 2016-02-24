@@ -28,6 +28,7 @@ var service_UUIDService=require("./api/services/UUIDService");
 var service_RefreshToken=require("./api/services/UserAccount/RefreshToken");
 var service_logging = require('./api/services/LoggingService');
 var service_pagination = require('./api/services/Pagination');
+var service_NCI = require('./api/services/NCI');
 //SERVICE
 
 //RESPONSES
@@ -80,6 +81,7 @@ module.exports={
 	RefreshToken:service_RefreshToken,
 	LoggingService: service_logging,
 	Pagination: service_pagination,
+	NCI:service_NCI,
 	//SERVICE END
 	
 	//RESPONSES BEGIN
