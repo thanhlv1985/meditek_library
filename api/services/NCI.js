@@ -1,9 +1,6 @@
-var socketIOClient= require('socket.io-client');
-var sailsIOClient=require('sails.io.js');
-var io=sailsIOClient(socketIOClient);
 var $q=require('q');
 
-module.exports=function(url)
+module.exports=function(socketIOClient,sailsIOClient,io,url)
 {
 	io.sails.url=url;
 	var obj={
