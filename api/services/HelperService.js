@@ -145,7 +145,8 @@ module.exports = {
             internalPractitioner: 'INTERNAL_PRACTITIONER', //DOCTOR
             externalPractitioner: 'EXTERTAL_PRACTITIONER', //GP
             patient: 'PATIENT',
-            clinicTelehealth: 'CLINIC_TELEHEALTH'
+            clinicTelehealth: 'CLINIC_TELEHEALTH',
+            organization: 'ORGANIZATION'
         },
         rolesValue:{
             'ADMIN':100,
@@ -154,6 +155,7 @@ module.exports = {
             'EXTERTAL_PRACTITIONER':70,
             'PATIENT':60,
             'CLINIC_TELEHEALTH':50,
+            'ORGANIZATION':60
         },
         //---------------------------------------------------------
         //---------------------------------------------------------
@@ -205,6 +207,11 @@ module.exports = {
                     maxTimePlus:null
                 },
 
+                'ORGANIZATION' :{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
                 'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
@@ -241,6 +248,12 @@ module.exports = {
                     secretKeyExpired:null,
                     maxTimePlus:null
                 },
+
+                'ORGANIZATION':{
+                    secretKeyExpired:null,
+                    maxTimePlus:null
+                },
+
                 'null':{
                     secretKeyExpired:null,
                     maxTimePlus:null
@@ -278,6 +291,12 @@ module.exports = {
                     secretKeyExpired:20*60,
                     maxTimePlus:2*60*60
                 },
+
+                'ORGANIZATION':{
+                    secretKeyExpired:20*60,
+                    maxTimePlus:2*60*60
+                },
+
                 'null':{
                     secretKeyExpired:20*60,
                     maxTimePlus:2*60*60
@@ -575,7 +594,8 @@ module.exports = {
                 isAssistant: false,
                 isInternalPractitioner: false,
                 isExternalPractitioner: false,
-                isPatient: false
+                isPatient: false,
+                isOrganization:false
             };
             roles.forEach(function(role, index) {
                 switch (role.RoleCode) {
@@ -593,7 +613,10 @@ module.exports = {
                         break;
                     case 'PATIENT': 
                         result.isPatient = true;
-                    break;
+                        break;
+                    case 'ORGANIZATION':
+                        result.isOrganization = true;
+                        break;
                     default:
                         break;
                 }
