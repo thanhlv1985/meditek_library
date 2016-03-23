@@ -1,21 +1,21 @@
 {
-  "name": "meditek_library",
-  "private": true,
-  "version": "0.0.13",
-  "description": "a Sails application",
-  "keywords": [],
-  "dependencies": {
-    
-  },
-  "scripts": {
-    "debug": "node debug app.js",
-    "start": "node app.js"
-  },
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
-  },
-  "author": "anonymous node/sails user",
-  "license": ""
+    "name": "meditek_library",
+    "private": true,
+    "version": "0.0.14",
+    "description": "a Sails application",
+    "keywords": [],
+    "dependencies": {
+
+    },
+    "scripts": {
+        "debug": "node debug app.js",
+        "start": "node app.js"
+    },
+    "main": "app.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
+    },
+    "author": "anonymous node/sails user",
+    "license": ""
 }
