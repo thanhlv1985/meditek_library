@@ -148,6 +148,15 @@ module.exports = {
             clinicTelehealth: 'CLINIC_TELEHEALTH',
             organization: 'ORGANIZATION'
         },
+        rolesID: {
+            admin: '1',
+            assistant: '2',
+            internalPractitioner: '5', //DOCTOR
+            externalPractitioner: '4', //GP
+            patient: '3',
+            clinicTelehealth: 'CLINIC_TELEHEALTH',
+            organization: '6'
+        },
         rolesValue:{
             'ADMIN':100,
             'ASSISTANT':90,
