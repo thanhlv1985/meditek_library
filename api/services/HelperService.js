@@ -423,6 +423,14 @@ module.exports = {
         }
         return obj;
     },
+
+    sqlParam: function (value) {
+        if(!_.isEmpty(value))
+            return value;
+        else
+            return true;
+    },
+
     /**
      * rationalizeObject:
      * Hợp lệ hóa destination object bằng source object
