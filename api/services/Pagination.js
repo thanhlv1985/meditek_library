@@ -160,8 +160,12 @@ module.exports = function(data, primaryKeyModel) {
                                         end = moment(end).add(1, 'day').toDate();
                                     }
                                 } else {
-                                    start = range[keyModel][keyRange][0];
-                                    end = range[keyModel][keyRange][1];
+                                    if (range[keyModel][keyRange][0].length !== 0) {
+                                        start = range[keyModel][keyRange][0];
+                                    }
+                                    if (range[keyModel][keyRange][1].length !== 0) {
+                                        end = range[keyModel][keyRange][1];
+                                    }
                                 }
                                 var tempRange = {};
                                 tempRange[keyRange] = {};
