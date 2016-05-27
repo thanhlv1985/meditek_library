@@ -589,23 +589,30 @@ module.exports = {
                 err.pushError("File Is Not Exist!");
                 return callback(err);
             }
-            var inputStream = fs.createReadStream(info.inputFile);
-            var outputStream = fs.createWriteStream(info.outputFile);
-            var decrypt = crypto.createDecipher(algorithm, info.password)
-            inputStream.on('data', function(data) {
-                var buf = new Buffer(decrypt.update(data), 'binary');
-                outputStream.write(buf);
-            }).on('end', function() {
-                var buf = new Buffer(decrypt.final('binary'), 'binary');
-                zlib.gunzip(buf, function(err, result) {
-                    if (err) throw err;
+            else {
+                var inputStream = fs.createReadStream(info.inputFile);
+                var outputStream = fs.createWriteStream(info.outputFile);
+                var decrypt = crypto.createDecipher(algorithm, info.password)
+                inputStream.on('data', function(data) {
+                    var buf = new Buffer(decrypt.update(data), 'binary');
                     outputStream.write(buf);
-                    outputStream.end();
-                    outputStream.on('close', function() {
-                        callback();
+                }).on('end', function() {
+                    var buf = new Buffer(decrypt.final('binary'), 'binary');
+                    zlib.gunzip(buf, function(err, result) {
+                        if (err)
+                            callback(err);
+                        else {
+                            outputStream.write(buf);
+                            outputStream.end();
+                            outputStream.on('close', function() {
+                                callback();
+                            });
+                        }
+
                     });
                 });
-            });
+            }
+
         })
     },
     GetRole: function(roles) {
