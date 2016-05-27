@@ -546,26 +546,30 @@ module.exports = {
                 var err = new Error("EncryptFile.Error");
                 err.pushError("File Is Not Exist!");
                 return callback(err);
-            }
-            var inputStream = fs.createReadStream(info.inputFile);
-            var outputStream = fs.createWriteStream(info.outputFile);
-            var encrypt = crypto.createCipher(algorithm, info.password);
-            inputStream.on('data', function(data) {
-                var buf = new Buffer(encrypt.update(data), 'binary');
-                outputStream.write(buf);
-            }).on('end', function() {
-                var buf = new Buffer(encrypt.final('binary'), 'binary');
-                zlib.gzip(buf, {
-                    level: 9
-                }, function(err, result) {
-                    if (err) throw err;
+            } else {
+                var inputStream = fs.createReadStream(info.inputFile);
+                var outputStream = fs.createWriteStream(info.outputFile);
+                var encrypt = crypto.createCipher(algorithm, info.password);
+                inputStream.on('data', function(data) {
+                    var buf = new Buffer(encrypt.update(data), 'binary');
                     outputStream.write(buf);
-                    outputStream.end();
-                    outputStream.on('close', function() {
-                        callback();
-                    })
+                }).on('end', function() {
+                    var buf = new Buffer(encrypt.final('binary'), 'binary');
+                    zlib.gzip(buf, {
+                        level: 9
+                    }, function(err, result) {
+                        if (err)
+                            callback(err)
+                        else {
+                            outputStream.write(buf);
+                            outputStream.end();
+                            outputStream.on('close', function() {
+                                callback();
+                            })
+                        }
+                    });
                 });
-            });
+            }
         })
     },
     /*
