@@ -555,7 +555,12 @@ module.exports = {
                     outputStream.write(buf);
                 }).on('end', function() {
                     var buf = new Buffer(encrypt.final('binary'), 'binary');
-                    zlib.gzip(buf, {
+                    outputStream.write(buf);
+                    outputStream.end();
+                    outputStream.on('close', function() {
+                        callback();
+                    })
+                    /*zlib.gzip(buf, {
                         level: 9
                     }, function(err, result) {
                         if (err)
@@ -567,7 +572,7 @@ module.exports = {
                                 callback();
                             })
                         }
-                    });
+                    });*/
                 });
             }
         })
@@ -598,7 +603,12 @@ module.exports = {
                     outputStream.write(buf);
                 }).on('end', function() {
                     var buf = new Buffer(decrypt.final('binary'), 'binary');
-                    zlib.gunzip(buf, function(err, result) {
+                    outputStream.write(buf);
+                    outputStream.end();
+                    outputStream.on('close', function() {
+                        callback();
+                    });
+                    /*zlib.gunzip(buf, function(err, result) {
                         if (err)
                             callback(err);
                         else {
@@ -609,7 +619,7 @@ module.exports = {
                             });
                         }
 
-                    });
+                    });*/
                 });
             }
 
