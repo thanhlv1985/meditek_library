@@ -4,6 +4,21 @@ module.exports=function(socketIOClient,sailsIOClient,io,url)
 {
 	io.sails.url=url;
 	var obj={
+		pushGlobalNotify:function(body)
+		{
+			var q=$q.defer();
+			try{
+				io.socket.post('/CreateGlobalNotifyJob',body,function(resData,jwres){
+					q.resolve({resData:resData,jwres:jwres});
+				})
+			}
+			catch(e){
+				console.log("e",e);
+				q.reject(e);
+			}
+			return q.promise;
+		},
+		
 		pushNotify:function(body)
 		{
 			var q=$q.defer();
