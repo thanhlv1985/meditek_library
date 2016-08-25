@@ -175,7 +175,7 @@ module.exports = {
         authTokenExpired: {
             'IOS': 30 * 60,
             'ARD': 30 * 60,
-            'WEB':15 *60,
+            'WEB':4 *60 *60,
         },// second
 
         // authSecretExprired:{
@@ -272,18 +272,18 @@ module.exports = {
 
             'WEB':{
                 'ADMIN':{
-                    secretKeyExpired:2*60*60,
-                    maxTimePlus:8*60*60
+                    secretKeyExpired:24*60*60,
+                    maxTimePlus:24*60*60
                 },
 
                 'ASSISTANT':{
-                    secretKeyExpired:2*60*60,
-                    maxTimePlus:8*60*60
+                    secretKeyExpired:24*60*60,
+                    maxTimePlus:24*60*60
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    secretKeyExpired:2*60*60,
-                    maxTimePlus:8*60*60
+                    secretKeyExpired:24*60*60,
+                    maxTimePlus:24*60*60
                 },
 
                 'EXTERTAL_PRACTITIONER':{
@@ -342,7 +342,7 @@ module.exports = {
             got:'GOT',
         },
 
-        oldRefreshCodeExpired:20,
+        oldRefreshCodeExpired:2 * 60,
 
         refreshCodePath:'/api/refresh-token/GetNewToken',
 
