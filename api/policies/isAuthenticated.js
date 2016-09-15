@@ -10,26 +10,19 @@ var moment = require('moment');
  *  - req.headers:
  * 		+authorization
  * 		+systemtype
- * 		+deviceid (nếu systemtype thuộc mobile system)
+ * 		+deviceid
  * Output:
  * - nếu thành công --->next()
  * - nếu thất bại trả error
  * 		error.errors[0]:
- *   		+ isAuthenticated.userTokenMakeError: lỗi make (create/update) userToken
- * 			+ isAuthenticated.secretKeyExpired: secret key quá hạn
  * 			+ isAuthenticated.tokenInvalid: token quá hạn
  * 			+ isAuthenticated.authorizationFailPattern: lỗi sai định dạng authorization (Bearer ...)
  * 			+ isAuthenticated.authorizationNotProvided: header không có authorization field
- * 			+ isAuthenticated.notAuthenticated : chưa login bằng passport, hoặc session đã hết hạn
  */
 module.exports = function(req, res, next) {
     var error = new Error("Policies.isAuthenticated.Error");
-    //Bước tiếp theo kiểm tra token:
     var authorization = req.headers.authorization;
-    //Kiểm tra trong header có authorization hay chưa
     if (o.checkData(authorization)) {
-
-        //Authorization token phải bắt đầu bằng Bearer
         if (authorization.startsWith('Bearer ')) {
             var token = authorization.slice('Bearer '.length);
             var sessionUser = req.user;
@@ -50,7 +43,6 @@ module.exports = function(req, res, next) {
             }
 
             jwt.verify(token, sessionUser.SecretKey, { algorithms: ['HS256'] }, function(err, decoded) {
-
                 if (o.checkData(err)) {
                     o.exlog(err);
                     //Nếu là lỗi token quá hạn
