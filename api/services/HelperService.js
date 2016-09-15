@@ -685,6 +685,8 @@ module.exports = {
         }
     },
 
+    
+
     getSystems:function()
     {
         return _.values(this.const.systemType);

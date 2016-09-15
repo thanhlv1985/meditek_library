@@ -63,84 +63,19 @@ module.exports = function(req, res, next) {
                             //Nếu là lỗi token quá hạn
                             if (err.name == 'TokenExpiredError') {
                                 console.log("============================TOKEN EXPIRE HANDLE");
-                                //Kiểm tra secret key có quá hạn hay chưa
-                                var payload = tokenDecoded.payload;
-                                console.log("============================PAYLOAD");
-                                console.log(payload);
-                                if (!o.isExpired(sessionUser.SecretCreatedAt, sessionUser.SecretExpired)) {
-                                    Services.RefreshToken.GetRefreshToken(userAccess)
-                                        .then(function(rt) {
-                                            console.log("============================REFRESH TOKEN DB DATA");
-                                            console.log(rt.dataValues);
-                                            console.log("============================MD5 OLD CODE:");
-                                            console.log(o.md5(rt.OldCode));
-                                            console.log("============================TOKEN EXPIRE HANDLE");
-                                            console.log(o.md5(rt.RefreshCode));
-                                            if (payload.RefreshCode == o.md5(rt.OldCode)) {
-                                                console.log("PAYLOAD WITH OLD REFRESH_CODE");
-                                                console.log(moment().format("DD/MM/YYYY HH:mm:ss"));
-                                                console.log(moment(rt.OldCodeExpiredAt).format("DD/MM/YYYY HH:mm:ss"));
-                                                if (moment().isBefore(moment(rt.OldCodeExpiredAt))) {
-                                                    next();
-                                                } else {
-                                                    //Nếu trường hợp đang gửi request new token mà bị cúp điện
-                                                    //hoặc bị ngắt internet thì sau đó vẫn cho phép request
-                                                    //yêu cầu new token được chạy
-                                                    if (req.path == o.const.refreshCodePath && rt.Status == o.const.refreshTokenStatus.waitget) {
-                                                        next();
-                                                    } else {
-                                                        error.pushError("isAuthenticated.oldRefreshCodeExpired");
-                                                        return res.unauthor(ErrorWrap(error));
-                                                    }
-                                                }
-                                            } else if (payload.RefreshCode == o.md5(rt.RefreshCode)) {
-                                                if (rt.Status == o.const.refreshTokenStatus.waitget) {
-                                                    Services.RefreshToken.UpdateStatus(userAccess, o.const.refreshTokenStatus.got)
-                                                        .then(function(result) {
-                                                            next();
-                                                        }, function(err) {
-                                                            return res.unauthor(ErrorWrap(err));
-                                                        })
-                                                } else {
-                                                    console.log("PAYLOAD WITH CURRENT REFRESH_CODE");
-                                                    Services.RefreshToken.CreateNewRefreshCode(userAccess, payload.RefreshCode)
-                                                        .then(function(result) {
-                                                            if (result.status == 'created' || result.status == 'waitget') {
-                                                                res.set('requireupdatetoken', true);
-                                                                // res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
-                                                                res.header('Access-Control-Expose-Headers', o.const.exposeHeaders);
-                                                                // res.set('newtoken',newtoken);
-                                                                // res.header('Access-Control-Expose-Headers', 'newtoken');
-                                                                next();
-                                                            } else {
-                                                                next();
-                                                            }
-                                                        }, function(err) {
-                                                            return res.unauthor(ErrorWrap(err));
-                                                        })
-                                                }
-                                            } else {
-                                                console.log("PAYLOAD WITH INVALID REFRESH_CODE");
-                                                console.log(payload);
-                                                error.pushError("isAuthenticated.invalidRefreshCode");
-                                                return res.unauthor(ErrorWrap(error));
-                                            }
-                                        }, function(err) {
-                                            o.exlog(err);
-                                            error.pushError("isAuthenticated.refreshTokenQueryError");
-                                            return res.unauthor(ErrorWrap(error));
-                                        })
-                                } else {
-                                    error.pushError("isAuthenticated.secretKeyExpired");
-                                    return res.unauthor(ErrorWrap(error));
-                                }
+                                error.pushError("isAuthenticated.TokenExpiredError");
+                                return res.unauthor(ErrorWrap(error));
                             } else {
                                 console.log(err);
                                 error.pushError("isAuthenticated.tokenInvalid");
                                 return res.unauthor(ErrorWrap(error));
                             }
                         } else {
-                            extendSecretExpired();
+                            //Kiem tra xem da den luc lay token moi hay chua
+                            if ( !o.isExpired(sessionUser.SecretCreatedAt, Math.floor(sessionUser.SecretExpired/2)) ) {
+                                
+                            }
+
                             next();
                         }
                     })

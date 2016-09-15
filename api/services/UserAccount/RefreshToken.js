@@ -116,27 +116,15 @@ module.exports={
 					//Truy vấn refreshToken (để xem có tồn tại hay chưa)
 					function CheckExist()
 					{
-						if(userAccess.SystemType==HelperService.const.systemType.website)
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									SystemType:HelperService.const.systemType.website
-								},
-								transaction:transaction,
-							});
-						}
-						else
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID,
-									AppID:userAccess.AppID,
-								},
-								transaction:transaction,
-							})
-						}
+						return RefreshToken.findOne({
+							where:{
+								UserAccountID:user.ID,
+								SystemType:userAccess.SystemType,
+								DeviceID:userAccess.DeviceID,
+								AppID:userAccess.AppID,
+							},
+							transaction:transaction,
+						})
 					}
 
 					return CheckExist()	
@@ -181,12 +169,8 @@ module.exports={
 								SecretExpired:secretExpired,
 								SecretExpiredPlus:maxTimePlus,
 							};
-							//Nếu system type là mobile thì yêu cầu cần có DeviceID
-							if(userAccess.SystemType!=HelperService.const.systemType.website)
-							{
-								insertInfo.DeviceID=userAccess.DeviceID;
-								insertInfo.AppID=userAccess.AppID;
-							}
+							insertInfo.DeviceID=userAccess.DeviceID;
+							insertInfo.AppID=userAccess.AppID;
 
 							return RefreshToken.create(insertInfo,{transaction:transaction})
 							.then(function(result){
@@ -234,27 +218,15 @@ module.exports={
 				{
 					function CheckExist()
 					{
-						if(userAccess.SystemType==HelperService.const.systemType.website)
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									SystemType:HelperService.const.systemType.website
-								},
-								transaction:transaction,
-							});
-						}
-						else
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID,
-									AppID:userAccess.AppID,
-								},
-								transaction:transaction,
-							})
-						}
+						return RefreshToken.findOne({
+							where:{
+								UserAccountID:user.ID,
+								SystemType:userAccess.SystemType,
+								DeviceID:userAccess.DeviceID,
+								AppID:userAccess.AppID,
+							},
+							transaction:transaction,
+						})
 					}
 					return CheckExist()
 					.then(function(rt){
@@ -306,27 +278,15 @@ module.exports={
 				{
 					function CheckExist()
 					{
-						if(userAccess.SystemType==HelperService.const.systemType.website)
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									SystemType:HelperService.const.systemType.website
-								},
-								transaction:transaction,
-							});
-						}
-						else
-						{
-							return RefreshToken.findOne({
-								where:{
-									UserAccountID:user.ID,
-									DeviceID:userAccess.DeviceID,
-									AppID:userAccess.AppID,
-								},
-								transaction:transaction,
-							})
-						}
+						return RefreshToken.findOne({
+							where:{
+								UserAccountID:user.ID,
+								SystemType:userAccess.SystemType,
+								DeviceID:userAccess.DeviceID,
+								AppID:userAccess.AppID,
+							},
+							transaction:transaction,
+						})
 					}
 					return CheckExist()
 					.then(function(rt){
