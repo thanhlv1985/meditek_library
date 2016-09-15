@@ -685,6 +685,26 @@ module.exports = {
         }
     },
 
+    isTimeGetNewToken: function(createdAt, seconds) {
+        if(checkData(seconds))
+        {
+            var date=moment(createdAt);
+            var itIsTime=date.clone().add(Math.floor(seconds/2),'seconds');
+            var current=moment();
+            if(current.isBefore(itIsTime))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    },
     
 
     getSystems:function()

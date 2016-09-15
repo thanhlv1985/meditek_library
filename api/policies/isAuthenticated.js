@@ -37,6 +37,7 @@ module.exports = function(req, res, next) {
 
             var tokenDecoded = jwt.decode(token, {complete: true});
             var sessionConnectKey = tokenDecoded.payload.sessionConnectKey;
+            req.sessionConnectKey = sessionConnectKey;
             RedisService.getSessionConnect(sessionConnectKey)
                 .then(function(sessionConnectInfo){
                     var sessionUser = sessionConnectInfo;
@@ -58,6 +59,7 @@ module.exports = function(req, res, next) {
                     }
 
                     jwt.verify(token, sessionUser.SecretKey, { algorithms: ['HS256'] }, function(err, decoded) {
+
                         if (o.checkData(err)) {
                             o.exlog(err);
                             //Nếu là lỗi token quá hạn
@@ -72,11 +74,18 @@ module.exports = function(req, res, next) {
                             }
                         } else {
                             //Kiem tra xem da den luc lay token moi hay chua
-                            if ( !o.isExpired(sessionUser.SecretCreatedAt, Math.floor(sessionUser.SecretExpired/2)) ) {
-                                
+                            if (o.isTimeGetNewToken(tokenDecoded.payload.createdAt, tokenDecoded.payload.expiresIn) ) {
+                                res.set('requireupdatetoken', true);
+                                // res.header('Access-Control-Expose-Headers', 'requireupdatetoken');
+                                res.header('Access-Control-Expose-Headers', o.const.exposeHeaders);
+                                // res.set('newtoken',newtoken);
+                                // res.header('Access-Control-Expose-Headers', 'newtoken');
+                                next();
+                            } else {
+                                next();
                             }
 
-                            next();
+
                         }
                     })
 
@@ -86,7 +95,7 @@ module.exports = function(req, res, next) {
 
 
 
-
+            return;
 
             //Lấy thông tin session
             var sessionUser = req.session.passport.user;
