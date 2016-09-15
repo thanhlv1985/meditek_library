@@ -25,7 +25,16 @@ module.exports={
 	},
 
 	getSessionConnect: function(key) {
-		return redis.get(key);
+		return redis.get(key)
+			.then(function(sessionConnectInfo){
+				if(sessionConnectInfo) {
+					return JSON.parse(sessionConnectInfo);
+				} else {
+					return null;
+				}
+			}, function(err){
+				throw err;
+			})
 	},
 
 	pushUserConnect:function(connectInfo)

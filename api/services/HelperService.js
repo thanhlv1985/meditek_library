@@ -175,7 +175,7 @@ module.exports = {
         authTokenExpired: {
             'IOS': 30 * 60,
             'ARD': 30 * 60,
-            'WEB': 24 * 60 *60,
+            'WEB': 10,
         },// second
 
         // authSecretExprired:{
@@ -705,7 +705,7 @@ module.exports = {
             return false;
         }
     },
-    
+
 
     getSystems:function()
     {
