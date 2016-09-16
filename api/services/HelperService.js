@@ -672,6 +672,7 @@ module.exports = {
             case 'WEB':
                 result = this.const.authTokenExpired['WEB']/4;
         }
+        return result;
     },
 
     isTimeGetNewToken: function(createdAt, seconds, systemType) {
