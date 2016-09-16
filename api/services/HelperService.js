@@ -663,6 +663,7 @@ module.exports = {
     },
 
     getAuthTokenTimeout: function(systemType) {
+
         var result = null;
         switch (systemType) {
             case 'IOS':
@@ -670,7 +671,8 @@ module.exports = {
                 result = 1 * (24 * 60 * 60); // ~ 1 day //TODO
                 break;
             case 'WEB':
-                result = this.const.authTokenExpired['WEB']/4;
+                result = Math.floor(this.const.authTokenExpired['WEB']/4);
+                break;
         }
         return result;
     },
