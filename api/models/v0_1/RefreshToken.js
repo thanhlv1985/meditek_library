@@ -60,27 +60,6 @@ module.exports = {
             }
         },
 
-        OldCode: {
-            type: Sequelize.STRING(255),
-            allowNull: true,
-            validate: {
-                len: {
-                    args: [0, 255],
-                    msg: 'Too long!'
-                }
-            }
-        },
-
-        OldCodeExpiredAt: {
-            type: Sequelize.DATE,
-            allowNull: true,
-            validate: {
-                isDate: {
-                    msg: 'Invalid!'
-                }
-            }
-        },
-
         RefreshCode: {
             type: Sequelize.STRING(255),
             allowNull: true,

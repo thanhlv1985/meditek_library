@@ -5,6 +5,7 @@
 var $q = require('q');
 var o=require("../HelperService");
 var moment=require("moment");
+var jwt = require('jsonwebtoken');
 /**
  * @typedef {object} ValidationException
  * @memberOf RefreshTokenService
@@ -159,14 +160,22 @@ module.exports={
 					.then(function(rt){
 						if(o.checkData(rt))
 						{
-							//Nếu refresh token đã tồn tại trong database thì update thông tin
+							var refreshToken=rt.dataValues;
+							var refreshTokenExpiration=o.getRefreshCodeExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
+							var refreshCodeExpiresIn=refreshTokenExpiration.expiresIn;
+							var refreshCodePayload = {
+								name: 'refreshCode',
+								UID: user.UID,
+								createdAt: new Date(),
+								expiresIn: refreshCodeExpiresIn
+							}
+							var refreshCode = jwt.sign(refreshCodePayload, refreshToken.SecretKey, {
+								expiresIn: refreshCodeExpiresIn
+							})
+
 							return rt.updateAttributes({
-									OldCode:null,
-									OldCodeExpiredAt:null,
-									RefreshCode:UUIDService.Create(),
-									Status:o.const.refreshTokenStatus.got,
-									SecretKey:UUIDService.Create(),
-									SecretCreatedAt:new Date(),
+									RefreshCode: refreshCode,
+									Status:o.const.refreshTokenStatus.got
 								},{transaction:transaction})
 								.then(function(result){
 									return result;
@@ -180,18 +189,31 @@ module.exports={
 						{
 							console.log("=========================create user token");
 							//Nếu refreshToken chưa tồn tại thì tạo mới refreshToken:
+
+							var refreshTokenExpiration=o.getRefreshCodeExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
+							var refreshCodeExpiresIn=refreshTokenExpiration.expiresIn;
+							var secretKey = UUIDService.Create();
+							var refreshCodePayload = {
+								name: 'refreshCode',
+								UID: user.UID,
+								createdAt: new Date(),
+								expiresIn: refreshCodeExpiresIn
+							}
+							var refreshCode = jwt.sign(refreshCodePayload, secretKey, {
+								expiresIn: refreshCodeExpiresIn
+							})
+							
 							var insertInfo={
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
 								DeviceID:userAccess.DeviceID,
 								AppID:userAccess.AppID,
-								OldCode:null,
-								OldCodeExpiredAt:null,
-								RefreshCode:UUIDService.Create(),
+								RefreshCode:refreshCode,
 								Status:o.const.refreshTokenStatus.got,
-								SecretKey:UUIDService.Create(),
+								SecretKey:secretKey,
 								SecretCreatedAt:new Date(),
 							};
+
 
 							return RefreshToken.create(insertInfo,{transaction:transaction})
 							.then(function(result){

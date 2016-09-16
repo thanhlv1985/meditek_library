@@ -184,6 +184,128 @@ module.exports = {
         //     'WEB':2*60*60,
         // },// second
 
+        refreshCodeExpiration: {
+            'IOS':{
+                'ADMIN':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'ASSISTANT':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'PATIENT':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'ORGANIZATION' :{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'null':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                }
+            },
+
+            'ARD':{
+                'ADMIN':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'ASSISTANT':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'PATIENT':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'ORGANIZATION':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                },
+
+                'null':{
+                    expiresIn:null,
+                    maxTimePlus:null
+                }
+            },
+
+
+            'WEB':{
+                'ADMIN':{
+                    expiresIn:24*60*60,
+                },
+
+                'ASSISTANT':{
+                    expiresIn:24*60*60,
+                },
+
+                'INTERNAL_PRACTITIONER':{
+                    expiresIn:24*60*60,
+                },
+
+                'EXTERTAL_PRACTITIONER':{
+                    expiresIn:20*60,
+                },
+
+                'PATIENT':{
+                    expiresIn:20*60,
+                },
+
+                'CLINIC_TELEHEALTH':{
+                    expiresIn:20*60,
+                },
+
+                'ORGANIZATION':{
+                    expiresIn:20*60,
+                },
+
+                'null':{
+                    expiresIn:20*60,
+                }
+            }
+        },
+
+
         userSecretExpiration:{
             'IOS':{
                 'ADMIN':{
@@ -384,6 +506,22 @@ module.exports = {
             return null;
         }
         return this.const.userSecretExpiration[systemType][role];
+    },
+
+    getRefreshCodeExpiration: function(systemType, role) {
+        if(role===null)
+        {
+            role='null';
+        }
+        if(!this.const.refreshCodeExpiration[systemType])
+        {
+            return null;
+        }
+        if(!this.const.refreshCodeExpiration[systemType][role])
+        {
+            return null;
+        }
+        return this.const.refreshCodeExpiration[systemType][role];
     },
 
     exlog: exlog,
