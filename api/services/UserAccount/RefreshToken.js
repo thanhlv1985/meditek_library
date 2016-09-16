@@ -158,24 +158,28 @@ module.exports={
 
 					return CheckExist()	
 					.then(function(rt){
+
+						var secretKey = UUIDService.Create();
+						var refreshTokenExpiration=o.getRefreshCodeExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
+						var refreshCodeExpiresIn=refreshTokenExpiration.expiresIn;
+						var refreshCodePayload = {
+							name: 'refreshCode',
+							UID: user.UID,
+							createdAt: new Date(),
+							expiresIn: refreshCodeExpiresIn
+						}
+						var refreshCode = jwt.sign(refreshCodePayload, secretKey, {
+							expiresIn: refreshCodeExpiresIn
+						})
+
 						if(o.checkData(rt))
 						{
 							var refreshToken=rt.dataValues;
-							var refreshTokenExpiration=o.getRefreshCodeExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
-							var refreshCodeExpiresIn=refreshTokenExpiration.expiresIn;
-							var refreshCodePayload = {
-								name: 'refreshCode',
-								UID: user.UID,
-								createdAt: new Date(),
-								expiresIn: refreshCodeExpiresIn
-							}
-							var refreshCode = jwt.sign(refreshCodePayload, refreshToken.SecretKey, {
-								expiresIn: refreshCodeExpiresIn
-							})
-
 							return rt.updateAttributes({
 									RefreshCode: refreshCode,
-									Status:o.const.refreshTokenStatus.got
+									Status:o.const.refreshTokenStatus.got,
+									SecretKey: secretKey,
+									SecretCreatedAt:new Date(),
 								},{transaction:transaction})
 								.then(function(result){
 									return result;
@@ -187,22 +191,6 @@ module.exports={
 						}
 						else
 						{
-							console.log("=========================create user token");
-							//Nếu refreshToken chưa tồn tại thì tạo mới refreshToken:
-
-							var refreshTokenExpiration=o.getRefreshCodeExpiration(userAccess.SystemType,o.getMaxRole(user.roles));
-							var refreshCodeExpiresIn=refreshTokenExpiration.expiresIn;
-							var secretKey = UUIDService.Create();
-							var refreshCodePayload = {
-								name: 'refreshCode',
-								UID: user.UID,
-								createdAt: new Date(),
-								expiresIn: refreshCodeExpiresIn
-							}
-							var refreshCode = jwt.sign(refreshCodePayload, secretKey, {
-								expiresIn: refreshCodeExpiresIn
-							})
-							
 							var insertInfo={
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
@@ -213,7 +201,6 @@ module.exports={
 								SecretKey:secretKey,
 								SecretCreatedAt:new Date(),
 							};
-
 
 							return RefreshToken.create(insertInfo,{transaction:transaction})
 							.then(function(result){
