@@ -172,135 +172,120 @@ module.exports = {
         //---------------------------------------------------------
         //---------------------------------------------------------
 
-        authTokenExpired: {
-            'IOS': 30 * 60,
-            'ARD': 30 * 60,
-            'WEB': 10,
-        },// second
+        authTokenExpired: {//second
+            'IOS': 60 * (24 * 60 * 60), // ~ 60 days
+            'ARD': 60 * (24 * 60 * 60), // ~ 60 days
+            'WEB':  2 * 60 * 60, // ~ 2 hours
+        },
 
-        // authSecretExprired:{
-        //     'IOS':null,
-        //     'ARD':null,
-        //     'WEB':2*60*60,
-        // },// second
-
-        refreshCodeExpiration: {
+        authTokenTimeout: { //second
+            'IOS': 1 * (24 * 60 * 60), // ~ 1 day //TODO
+            'ARD': 1 * (24 * 60 * 60), // ~ 1 day //TODO
+            'WEB': 30 * 60, // ~30 minutes //USED  = authTokenExpired['WEB']/4
+        },
+            
+        
+        refreshCodeExpiration: { //second
             'IOS':{
                 'ADMIN':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years
                 },
 
                 'ASSISTANT':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'PATIENT':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ORGANIZATION' :{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'null':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:2 * 60 * 60, // ~2 hours,
                 }
             },
 
             'ARD':{
                 'ADMIN':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ASSISTANT':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'PATIENT':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ORGANIZATION':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'null':{
-                    expiresIn:null,
-                    maxTimePlus:null
+                    expiresIn:2 * 60 * 60, // ~2 hours,
                 }
             },
 
 
             'WEB':{
                 'ADMIN':{
-                    expiresIn:24*60*60,
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'ASSISTANT':{
-                    expiresIn:24*60*60,
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    expiresIn:24*60*60,
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    expiresIn:20*60,
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'PATIENT':{
-                    expiresIn:20*60,
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    expiresIn:20*60,
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'ORGANIZATION':{
-                    expiresIn:20*60,
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'null':{
-                    expiresIn:20*60,
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 }
             }
         },
@@ -677,24 +662,49 @@ module.exports = {
         }
     },
 
-    isTimeGetNewToken: function(createdAt, seconds) {
-        if(checkData(seconds))
-        {
+    getAuthTokenTimeout: function(systemType) {
+        var result = null;
+        switch (systemType) {
+            case 'IOS':
+            case 'ARD':
+                result = 1 * (24 * 60 * 60); // ~ 1 day //TODO
+                break;
+            case 'WEB':
+                result = this.const.authTokenExpired['WEB']/4;
+        }
+    },
+
+    isTimeGetNewToken: function(createdAt, seconds, systemType) {
+        var mobileSystem= this.getMobileSystems();
+        if(mobileSystem.indexOf(systemType)>=0) {
+            //mobile
+            var currentDate = moment();
             var date=moment(createdAt);
-            var itIsTime=date.clone().add(Math.floor(seconds/2),'seconds');
-            var current=moment();
-            if(current.isBefore(itIsTime))
-            {
+            if(currentDate.diff(date,'days') >=1) {
+                return true;
+            } else {
                 return false;
+            }
+        } else {
+            //website
+            if(checkData(seconds))
+            {
+                var date=moment(createdAt);
+                var itIsTime=date.clone().add(Math.floor(seconds/4),'seconds');
+                var current=moment();
+                if(current.isBefore(itIsTime))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                return true;
+                return false;
             }
-        }
-        else
-        {
-            return false;
         }
     },
 
