@@ -177,13 +177,6 @@ module.exports = {
             'ARD': 60 * (24 * 60 * 60), // ~ 60 days
             'WEB':  2 * 60 * 60, // ~ 2 hours
         },
-
-        authTokenTimeout: { //second
-            'IOS': 1 * (24 * 60 * 60), // ~ 1 day //TODO
-            'ARD': 1 * (24 * 60 * 60), // ~ 1 day //TODO
-            'WEB': 30 * 60, // ~30 minutes //USED  = authTokenExpired['WEB']/4
-        },
-            
         
         refreshCodeExpiration: { //second
             'IOS':{
