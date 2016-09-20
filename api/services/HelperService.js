@@ -178,7 +178,7 @@ module.exports = {
             'WEB':  2 * 60 * 60, // ~ 2 hours
         },
         
-        refreshCodeExpiration: { //second
+        refreshCodeExpiration: { 
             'IOS':{
                 'ADMIN':{
                     expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years
@@ -294,7 +294,8 @@ module.exports = {
             document: 'MedicalDocument',
             avatar: 'ProfileImage',
             signature: 'Signature',
-            drawing:'MedicalDrawing'
+            drawing:'MedicalDrawing',
+            record:'Record',
         },
 
         imageExt: ['jpg','jpeg', 'png', 'gif', 'webp', 'tif', 'bmp', 'psd', 'jxr'],
