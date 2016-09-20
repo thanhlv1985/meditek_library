@@ -21,12 +21,26 @@ module.exports = {
         client.del(key);
     },
 
+    set: function(key, obj) {
+        var objStr = JSON.stringify(obj);
+        client.set(key, objStr);
+        console.log(logHeader, 'set: ', key, obj);
+    },
+
     hset: function(key, hashKey, obj) {
         var objStr = JSON.stringify(obj);
         client.hset(key, hashKey, objStr);
         console.log(logHeader, 'hset: ', key, hashKey, obj);
     },
 
+    get:function(key) {
+        var q=$q.defer();
+        client.get(key, function(err, obj){
+            q.resolve(obj);
+        })
+        return q.promise;
+
+    },
 
     hget: function(key, hashKey) {
         var q = $q.defer();

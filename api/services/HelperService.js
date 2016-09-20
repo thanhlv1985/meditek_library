@@ -172,143 +172,113 @@ module.exports = {
         //---------------------------------------------------------
         //---------------------------------------------------------
 
-        authTokenExpired: {
-            'IOS': 24 * 60 *60,
-            'ARD': 24 * 60 *60,
-            'WEB': 24 * 60 *60,
-        },// second
-
-        // authSecretExprired:{
-        //     'IOS':null,
-        //     'ARD':null,
-        //     'WEB':2*60*60,
-        // },// second
-
-        userSecretExpiration:{
+        authTokenExpired: {//second
+            'IOS': 60 * (24 * 60 * 60), // ~ 60 days
+            'ARD': 60 * (24 * 60 * 60), // ~ 60 days
+            'WEB':  2 * 60 * 60, // ~ 2 hours
+        },
+        
+        refreshCodeExpiration: { 
             'IOS':{
                 'ADMIN':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years
                 },
 
                 'ASSISTANT':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'PATIENT':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ORGANIZATION' :{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'null':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:2 * 60 * 60, // ~2 hours,
                 }
             },
 
             'ARD':{
                 'ADMIN':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ASSISTANT':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'PATIENT':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'ORGANIZATION':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:5 * 365 * (24 * 60 * 60), //~ 5 years,
                 },
 
                 'null':{
-                    secretKeyExpired:null,
-                    maxTimePlus:null
+                    expiresIn:2 * 60 * 60, // ~2 hours,
                 }
             },
 
 
             'WEB':{
                 'ADMIN':{
-                    secretKeyExpired:24*60*60,
-                    maxTimePlus:24*60*60
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'ASSISTANT':{
-                    secretKeyExpired:24*60*60,
-                    maxTimePlus:24*60*60
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    secretKeyExpired:24*60*60,
-                    maxTimePlus:24*60*60
+                    expiresIn:12 * 60 * 60, // ~12 hours
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    secretKeyExpired:20*60,
-                    maxTimePlus:2*60*60
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'PATIENT':{
-                    secretKeyExpired:20*60,
-                    maxTimePlus:2*60*60
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    secretKeyExpired:20*60,
-                    maxTimePlus:2*60*60
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'ORGANIZATION':{
-                    secretKeyExpired:20*60,
-                    maxTimePlus:2*60*60
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 },
 
                 'null':{
-                    secretKeyExpired:20*60,
-                    maxTimePlus:2*60*60
+                    expiresIn:2 * 60 * 60, // ~2 hours
                 }
             }
         },
@@ -369,22 +339,22 @@ module.exports = {
         })
         return maxRole.RoleCode;
     },
+    
 
-    getUserSecretExpiration:function(systemType,role)
-    {
+    getRefreshCodeExpiration: function(systemType, role) {
         if(role===null)
         {
             role='null';
         }
-        if(!this.const.userSecretExpiration[systemType])
+        if(!this.const.refreshCodeExpiration[systemType])
         {
             return null;
         }
-        if(!this.const.userSecretExpiration[systemType][role])
+        if(!this.const.refreshCodeExpiration[systemType][role])
         {
             return null;
         }
-        return this.const.userSecretExpiration[systemType][role];
+        return this.const.refreshCodeExpiration[systemType][role];
     },
 
     exlog: exlog,
@@ -685,6 +655,56 @@ module.exports = {
             return false;
         }
     },
+
+    getAuthTokenTimeout: function(systemType) {
+
+        var result = null;
+        switch (systemType) {
+            case 'IOS':
+            case 'ARD':
+                result = 1 * (24 * 60 * 60); // ~ 1 day //TODO
+                break;
+            case 'WEB':
+                result = Math.floor(this.const.authTokenExpired['WEB']/4);
+                break;
+        }
+        return result;
+    },
+
+    isTimeGetNewToken: function(createdAt, seconds, systemType) {
+        var mobileSystem= this.getMobileSystems();
+        if(mobileSystem.indexOf(systemType)>=0) {
+            //mobile
+            var currentDate = moment();
+            var date=moment(createdAt);
+            if(currentDate.diff(date,'days') >=1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            //website
+            if(checkData(seconds))
+            {
+                var date=moment(createdAt);
+                var itIsTime=date.clone().add(Math.floor(seconds/4),'seconds');
+                var current=moment();
+                if(current.isBefore(itIsTime))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    },
+
 
     getSystems:function()
     {
