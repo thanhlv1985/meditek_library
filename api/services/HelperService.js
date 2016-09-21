@@ -175,7 +175,8 @@ module.exports = {
         authTokenExpired: {//second
             'IOS': 60 * (24 * 60 * 60), // ~ 60 days
             'ARD': 60 * (24 * 60 * 60), // ~ 60 days
-            'WEB':  2 * 60 * 60, // ~ 2 hours
+            // 'WEB':  2 * 60 * 60, // ~ 2 hours
+            'WEB':  60, // ~ 2 hours
         },
         
         refreshCodeExpiration: { 
