@@ -26,39 +26,45 @@ module.exports = function(req, res, next) {
         if (authorization.startsWith('Bearer ')) {
             var token = authorization.slice('Bearer '.length);
             var sessionUser = req.user;
-            var userAccess = {
-                UserUID: req.user.UID,
-                SystemType: req.headers.systemtype,
-                DeviceID: req.headers.deviceid,
-                AppID: req.headers.appid,
-            };
+            if(sessionUser) {
+                var userAccess = {
+                    UserUID: req.user.UID,
+                    SystemType: req.headers.systemtype,
+                    DeviceID: req.headers.deviceid,
+                    AppID: req.headers.appid,
+                };
 
-            function systemValidation() {
-                return (sessionUser.DeviceID == userAccess.DeviceID && sessionUser.SystemType == userAccess.SystemType && sessionUser.AppID == userAccess.AppID);
-            }
+                function systemValidation() {
+                    return (sessionUser.DeviceID == userAccess.DeviceID && sessionUser.SystemType == userAccess.SystemType && sessionUser.AppID == userAccess.AppID);
+                }
 
-            if (!systemValidation()) {
-                error.pushError("isAuthenticated.sessionUserMismatchedUserAccess");
+                if (!systemValidation()) {
+                    error.pushError("isAuthenticated.sessionUserMismatchedUserAccess");
+                    return res.unauthor(ErrorWrap(error));
+                }
+
+                jwt.verify(token, sessionUser.SecretKey, { algorithms: ['HS256'] }, function(err, decoded) {
+                    if (o.checkData(err)) {
+                        o.exlog(err);
+                        //Nếu là lỗi token quá hạn
+                        if (err.name == 'TokenExpiredError') {
+                            console.log("============================TOKEN EXPIRE HANDLE");
+                            error.pushError("isAuthenticated.TokenExpiredError");
+                            return res.unauthor(ErrorWrap(error));
+                        } else {
+                            console.log(err);
+                            error.pushError("isAuthenticated.tokenInvalid");
+                            return res.unauthor(ErrorWrap(error));
+                        }
+                    } else {
+                        next();
+                    }
+                })
+            } else {
+                error.pushError('isAuthenticated.sessionUserNotFound');
                 return res.unauthor(ErrorWrap(error));
             }
 
-            jwt.verify(token, sessionUser.SecretKey, { algorithms: ['HS256'] }, function(err, decoded) {
-                if (o.checkData(err)) {
-                    o.exlog(err);
-                    //Nếu là lỗi token quá hạn
-                    if (err.name == 'TokenExpiredError') {
-                        console.log("============================TOKEN EXPIRE HANDLE");
-                        error.pushError("isAuthenticated.TokenExpiredError");
-                        return res.unauthor(ErrorWrap(error));
-                    } else {
-                        console.log(err);
-                        error.pushError("isAuthenticated.tokenInvalid");
-                        return res.unauthor(ErrorWrap(error));
-                    }
-                } else {
-                    next();
-                }
-            })
         } else {
             error.pushError("isAuthenticated.authorizationFailPattern");
             return res.unauthor(ErrorWrap(error));
