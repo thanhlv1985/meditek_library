@@ -29,6 +29,7 @@ var service_RefreshToken=require("./api/services/UserAccount/RefreshToken");
 var service_logging = require('./api/services/LoggingService');
 var service_pagination = require('./api/services/Pagination');
 var service_NCI = require('./api/services/NCI');
+var parseSessionConnectInfo = require('./api/services/parseSessionConnectInfo');
 //SERVICE
 
 //RESPONSES
@@ -82,6 +83,7 @@ module.exports={
 	LoggingService: service_logging,
 	Pagination: service_pagination,
 	NCI:service_NCI,
+	parseSessionConnectInfo: parseSessionConnectInfo,
 	//SERVICE END
 	
 	//RESPONSES BEGIN
