@@ -12,6 +12,17 @@ module.exports = {
             primaryKey: true
         },
 
+        UID: {
+            type: Sequelize.STRING(255),
+            allowNull: false,
+            validate: {
+                isUUID: {
+                    args: 4,
+                    msg: 'Must be an UUID V4!'
+                }
+            }
+        },
+
         UserAccountID: {
             type: Sequelize.BIGINT(20),
             allowNull: true,
