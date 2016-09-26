@@ -192,6 +192,7 @@ module.exports={
 						else
 						{
 							var insertInfo={
+								UID: UUIDService.Create(),
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
 								DeviceID:userAccess.DeviceID,
