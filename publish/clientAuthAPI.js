@@ -1,5 +1,5 @@
 /**
- * Created by tannguyen on 26/09/2016.
+ * Created by tannguyen on 19/09/2016.
  */
 var tracklog = {
     log: function(info) {
@@ -34,6 +34,8 @@ function AuthAPI(authBaseUrl) {
 
     this.authBaseUrl = authBaseUrl;
 
+    this.tokenInterval = null;
+
     this.removeRefreshCode = function () {
         if(localStorage.getItem('refreshCode')!==null) {
             localStorage.removeItem('refreshCode')
@@ -42,6 +44,7 @@ function AuthAPI(authBaseUrl) {
 
     this.clearAuthInfo = function() {
         Cookies.remove('token',{ path: '' });
+        Cookies.remove('needRunTokenInterval',{ path: '' });
         Cookies.remove('userInfo',{ path: '' });
         Cookies.remove('userprofile',{ path: '' });
         localStorage.removeItem('refreshCode');
@@ -104,8 +107,9 @@ function AuthAPI(authBaseUrl) {
                 if(event.data.eventName== 'receiveAuthInfo') {
                     var authInfo = event.data.authInfo||null;
                     self.getNewToken();
-                    if(authInfo.needRunTokenInterval) {
+                    if(authInfo.needRunTokenInterval=='true') {
                         console.log("EFORM: RUN TOKEN INTERVAL");
+                        Cookies.set('needRunTokenInterval', authInfo.needRunTokenInterval);
                         self.RunTokenInterval();
                     }
                     if(authInfo.refreshCode && authInfo.refreshCode!==localStorage.refreshCode) {
@@ -192,6 +196,7 @@ function AuthAPI(authBaseUrl) {
     }
 
     this.RunTokenInterval = function() {
+        if(Cookies.get('needRunTokenInterval')!='true') return;
         var self = this;
         $.ajax({
             type: "GET",
@@ -202,9 +207,11 @@ function AuthAPI(authBaseUrl) {
             success: function(data, status, xhr) {
                 self.tokenTimeout = data.timeout;
                 if(data.timeout) {
-                    setInterval(function(){
-                        self.getNewToken();
-                    }, self.tokenTimeout*1000);
+                    if(!self.tokenInterval) {
+                        self.tokenInterval=setInterval(function(){
+                            self.getNewToken();
+                        }, self.tokenTimeout*1000);
+                    }
                 }
             },
             error: function(xhr,status,error) {
