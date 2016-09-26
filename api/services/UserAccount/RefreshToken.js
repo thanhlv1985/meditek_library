@@ -310,6 +310,45 @@ module.exports={
 			throw err;
 		})
 	},
+
+	RemoveRefreshTokenViaUserAccess: function(userAccess, transaction){
+		var error = new Error("RemoveRefreshToken");
+		return Validation(userAccess)
+		.then(function(data){
+			return UserAccount.findOne({
+				where:{UID:userAccess.UserUID},
+				transaction:transaction,
+			})
+			.then(function(u){
+				var user=u.dataValues;
+				if(o.checkData(user)) {
+					return RefreshToken.destroy({
+						where: {
+							UserAccountID:user.ID,
+							SystemType:userAccess.SystemType,
+							DeviceID:userAccess.DeviceID,
+							AppID:userAccess.AppID,
+						},
+						transaction: transaction
+					})
+					.then(function(result){
+						return {status:'success'};
+					}, function(err){
+						error.pushError("refreshToken.deleteError");
+						throw error;
+					})
+				} else {
+					error.pushError('userAccount.notFound');
+					throw error;
+				}
+			}, function(err){
+				error.pushError("userAccount.queryError");
+				throw error;
+			})
+		}, function(err){
+			throw err;
+		});
+	},
 	
 
 	UpdateStatus:function(userAccess, status, transaction)
