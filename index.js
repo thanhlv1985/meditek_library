@@ -12,6 +12,7 @@ var policy_isExternalPractitioner=require("./api/policies/isExternalPractitioner
 var policy_isInternalPractitioner=require("./api/policies/isInternalPractitioner");
 var policy_isPatient=require("./api/policies/isPatient");
 var policy_setExposeHeaders=require("./api/policies/setExposeHeaders");
+var policy_parseSocket = require('./api/policies/parseSocket');
 //POLICIES
 
 //SERVICE
@@ -66,6 +67,7 @@ module.exports={
 	isInternalPractitioner:policy_isInternalPractitioner,
 	isPatient:policy_isPatient,
 	setExposeHeaders:policy_setExposeHeaders,
+	parseSocket: policy_parseSocket,
 	//POLICIES END
 	
 	//SERVICE BEGIN
