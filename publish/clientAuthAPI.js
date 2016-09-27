@@ -36,6 +36,10 @@ function AuthAPI(authBaseUrl) {
 
     this.tokenInterval = null;
 
+    this.initMasterPage = function() {
+        Cookies.set('needRunTokenInterval', true);
+    }
+
     this.removeRefreshCode = function () {
         if(localStorage.getItem('refreshCode')!==null) {
             localStorage.removeItem('refreshCode')
