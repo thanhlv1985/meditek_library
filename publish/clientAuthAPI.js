@@ -1,6 +1,8 @@
 /**
  * Created by tannguyen on 19/09/2016.
  */
+const version = '1.0';
+
 var tracklog = {
     log: function(info) {
         var postData = {
@@ -29,6 +31,30 @@ var tracklog = {
 }
 
 function AuthAPI(authBaseUrl) {
+
+    $.ajax({
+        type: "GET",
+        xhrFields: {
+            withCredentials: true
+        },
+        url: authBaseUrl + '/api/getClientAuthAPIVersion',
+        success: function(data, status, xhr) {
+            if(parseFloat(version) < parseFloat(data.version)) {
+                alert("Client Auth API is old.");
+                tracklog.log({name: 'checkClientAuthAPI', content: "Client Auth API is old."});
+            }
+            else if(parseFloat(version) > parseFloat(data.version)) {
+                alert("Client Auth API is too new");
+                tracklog.log({name: 'checkClientAuthAPI', content: "Client Auth API is too new"});
+            }
+
+        },
+        error: function(xhr,status,error) {
+            tracklog.log({name: 'checkClientAuthAPI', content: 'Error when check'});
+        }
+    });
+
+
 
     this.tokenTimeout = null;
 
@@ -111,7 +137,7 @@ function AuthAPI(authBaseUrl) {
                 if(event.data.eventName== 'receiveAuthInfo') {
                     var authInfo = event.data.authInfo||null;
                     self.getNewToken();
-                    if(authInfo.needRunTokenInterval=='true') {
+                    if(authInfo.needRunTokenInterval==true) {
                         console.log("EFORM: RUN TOKEN INTERVAL");
                         Cookies.set('needRunTokenInterval', authInfo.needRunTokenInterval);
                         self.RunTokenInterval();

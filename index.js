@@ -53,6 +53,7 @@ var controller_UserActivationController=require("./api/controllers/UserAccount/v
 //CONTROLLER
 
 module.exports={
+	clientAuthAPIVersion:'1.0',
 	//POLICIES BEGIN
 	checkCookieToken:policy_checkCookieToken,
 	checkVersion:policy_checkVersion,
