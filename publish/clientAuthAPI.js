@@ -161,7 +161,8 @@ function AuthAPI(authBaseUrl) {
             } else {
                 // The data hasn't been sent from your site!
                 // Be careful! Do not use it.
-                var error = new Error ("EFORM:SecurityError: Blocked a frame with origin from accessing a cross-origin frame");
+                alert('SecurityError: Blocked a frame with origin from accessing a cross-origin frame');
+                var error = new Error ("SecurityError: Blocked a frame with origin from accessing a cross-origin frame");
                 console.error(error);
                 return;
             }
