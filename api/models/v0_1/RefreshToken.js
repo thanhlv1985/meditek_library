@@ -107,29 +107,6 @@ module.exports = {
                 }
             }
         },
-
-        SecretExpired: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true,
-            validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
-                }
-            }
-        },
-
-        SecretExpiredPlus: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true,
-            validate: {
-
-                isInt: {
-                    msg: 'Must be an integer!'
-                }
-            }
-        },
-
     },
     associations: function() {},
     options: {
