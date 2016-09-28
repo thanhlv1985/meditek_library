@@ -2,7 +2,6 @@ var redis=require("./RedisWrap");
 var o=require("./HelperService");
 
 var userConnectKeyPrefix="userConnect:";
-var sessionConnectKeyPrefix = 'sessionConnect:';
 var concatp=function()
 {
 	var str="";
@@ -18,8 +17,7 @@ var concatp=function()
 }
 
 module.exports={
-	pushSessionConnect: function(uid, sessionUser) {
-		var key=sessionConnectKeyPrefix+ uid;
+	pushSessionConnect: function(key, sessionUser) {
 		redis.set(key, sessionUser);
 		return key;
 	},

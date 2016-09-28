@@ -172,11 +172,14 @@ module.exports={
 							expiresIn: refreshCodeExpiresIn
 						})
 
+						var refreshCodeExpiredAt = moment().add(refreshCodeExpiresIn, 'seconds').toDate();
+
 						if(o.checkData(rt))
 						{
 							var refreshToken=rt.dataValues;
 							return rt.updateAttributes({
 									RefreshCode: refreshCode,
+									RefreshCodeExpiredAt:refreshCodeExpiredAt,
 									Status:o.const.refreshTokenStatus.got,
 									SecretKey: secretKey,
 									SecretCreatedAt:new Date(),
@@ -191,16 +194,19 @@ module.exports={
 						}
 						else
 						{
+							var refreshTokenUID = UUIDService.Create();
 							var insertInfo={
-								UID: UUIDService.Create(),
+								UID: refreshTokenUID,
 								UserAccountID:user.ID,
 								SystemType:userAccess.SystemType,
 								DeviceID:userAccess.DeviceID,
 								AppID:userAccess.AppID,
 								RefreshCode:refreshCode,
+								RefreshCodeExpiredAt:refreshCodeExpiredAt,
 								Status:o.const.refreshTokenStatus.got,
 								SecretKey:secretKey,
 								SecretCreatedAt:new Date(),
+								SessionKey: o.makeSessionConnectKey(refreshTokenUID)
 							};
 
 							return RefreshToken.create(insertInfo,{transaction:transaction})
