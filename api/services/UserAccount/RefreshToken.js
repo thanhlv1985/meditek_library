@@ -177,14 +177,24 @@ module.exports={
 						if(o.checkData(rt))
 						{
 							var refreshToken=rt.dataValues;
-							return rt.updateAttributes({
-									RefreshCode: refreshCode,
-									RefreshCodeExpiredAt:refreshCodeExpiredAt,
-									Status:o.const.refreshTokenStatus.got,
-									SecretKey: secretKey,
-									SecretCreatedAt:new Date(),
-									SessionKey: o.makeSessionConnectKey(rt.UID)
-								},{transaction:transaction})
+							
+							var refreshTokenUID = null;
+							if(refreshToken.UID)
+								refreshTokenUID = refreshToken.UID;
+							else
+								refreshTokenUID = UUIDService.Create();
+
+							var updateInfo = {
+								UID: refreshTokenUID,
+								RefreshCode: refreshCode,
+								RefreshCodeExpiredAt:refreshCodeExpiredAt,
+								Status:o.const.refreshTokenStatus.got,
+								SecretKey: secretKey,
+								SecretCreatedAt:new Date(),
+								SessionKey: o.makeSessionConnectKey(refreshTokenUID),
+							}
+
+							return rt.updateAttributes(updateInfo,{transaction:transaction})
 								.then(function(result){
 									return result;
 								},function(err){
