@@ -446,5 +446,54 @@ module.exports={
 		
 	},
 
+
+	CleanOldRefreshToken: function(userID, transaction) {
+
+		var error = new Error ("CleanOldRefreshToken.Error");
+
+		return RefreshToken.findAll({
+			where:{
+				UserAccountID:userID,
+				RefreshCodeExpiredAt:{
+					$ne: null,
+					$lt: new Date(),
+				}
+			},
+			transaction:transaction,
+		})
+			.then(function(rts){
+				if(rts && rts.length>0) {
+					for(var i = 0 ; i < rts.length; i++) {
+						if(rts[i].SessionKey)
+						{
+							RedisService.removeSessionConnect(rts[i].SessionKey);
+						}
+					}
+					return RefreshToken.destroy({
+						where: {
+							UserAccountID:userID,
+							RefreshCodeExpiredAt:{
+								$ne: null,
+								$lt: new Date(),
+							}
+						},
+						transaction: transaction
+					})
+						.then(function(result){
+							return {status: 'success', msg: ('Number of Old RefreshCode Item have been deleted: '+result)};
+						}, function(err){
+							error.pushError("refreshToken.deleteError");
+							throw error;
+						})
+
+				} else {
+					return {status: 'success', msg: 'No Old RefreshCode Item'};
+				}
+
+			}, function(err) {
+				error.pushError("refreshToken.queryError");
+				throw error;
+			})
+	}
 	
 }
