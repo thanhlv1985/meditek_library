@@ -120,11 +120,11 @@ module.exports = {
 
         SessionKey: {
             type: Sequelize.STRING(255),
-            allowNull: false,
+            allowNull: true,
             validate: {
-                isUUID: {
-                    args: 4,
-                    msg: 'Must be an UUID V4!'
+                len: {
+                    args: [0, 255],
+                    msg: 'Too long!'
                 }
             }
         },
