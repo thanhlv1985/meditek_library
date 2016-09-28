@@ -319,6 +319,11 @@ module.exports = {
         refreshCodePath:'/api/refresh-token/GetNewToken',
 
         exposeHeaders:'filename,requireupdatetoken, testtesttesttest',
+
+    },
+
+    makeSessionConnectKey: function(uid) {
+        return 'sessionConnect:' + uid;
     },
 
     getRoleList:function()
