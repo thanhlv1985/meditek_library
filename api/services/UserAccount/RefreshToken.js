@@ -183,6 +183,7 @@ module.exports={
 									Status:o.const.refreshTokenStatus.got,
 									SecretKey: secretKey,
 									SecretCreatedAt:new Date(),
+									SessionKey: o.makeSessionConnectKey(rt.UID)
 								},{transaction:transaction})
 								.then(function(result){
 									return result;
