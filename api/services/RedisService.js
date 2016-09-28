@@ -22,6 +22,11 @@ module.exports={
 		return key;
 	},
 
+	removeSessionConnect: function(key) {
+		redis.del(key);
+		return key;
+	},
+
 	getSessionConnect: function(key) {
 		return redis.get(key)
 			.then(function(sessionConnectInfo){
