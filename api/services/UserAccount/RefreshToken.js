@@ -339,19 +339,38 @@ module.exports={
 			.then(function(u){
 				var user=u.dataValues;
 				if(o.checkData(user)) {
-					return RefreshToken.destroy({
-						where: {
+					return RefreshToken.findOne({
+						where:{
 							UserAccountID:user.ID,
 							SystemType:userAccess.SystemType,
 							DeviceID:userAccess.DeviceID,
 							AppID:userAccess.AppID,
 						},
-						transaction: transaction
+						transaction:transaction,
 					})
-					.then(function(result){
-						return {status:'success'};
-					}, function(err){
-						error.pushError("refreshToken.deleteError");
+					.then(function(rt) {
+						if(o.checkData(rt)) {
+							return RefreshToken.destroy({
+								where: {
+									UserAccountID:user.ID,
+									SystemType:userAccess.SystemType,
+									DeviceID:userAccess.DeviceID,
+									AppID:userAccess.AppID,
+								},
+								transaction: transaction
+							})
+							.then(function(result){
+								return {SessionKey: rt.SessionKey};
+							}, function(err){
+								error.pushError("refreshToken.deleteError");
+								throw error;
+							})
+						}
+						else {
+							return {};
+						}
+					}, function(err) {
+						error.pushError("refreshToken.queryError");
 						throw error;
 					})
 				} else {
