@@ -401,7 +401,8 @@ module.exports={
 						RefreshCodeExpiredAt:{
 							$ne: null,
 							$gt: new Date(),
-						}
+						},
+						attributes: ['UID', 'SystemType', 'DeviceID', 'AppID', 'SecretCreatedAt']
 					},
 					transaction:transaction,
 				})
