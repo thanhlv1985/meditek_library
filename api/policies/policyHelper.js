@@ -62,7 +62,7 @@ modules.exports = {
     orOperator: function() {
         var result = false;
         for(var i = 0; i< arguments.length; i++) {
-            result = (result || arguments[i]());
+            result = (result || arguments[i]);
         }
         return result;
     },
@@ -70,7 +70,7 @@ modules.exports = {
     andOperator: function() {
         var result = true;
         for(var i = 0; i< arguments.length; i++) {
-            result = (result && arguments[i]());
+            result = (result && arguments[i]);
         }
         return result;
     }
