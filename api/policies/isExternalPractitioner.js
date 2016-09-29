@@ -6,7 +6,7 @@ module.exports = function(req, res, next) {
     {
         var isExternalPractitioner=false;
         _.each(req.user.roles,function(role){
-            if(role.RoleCode==o.const.roles.internalPractitioner)
+            if(role.RoleCode==o.const.roles.externalPractitioner)
                 isExternalPractitioner=true;
         });
         if (isExternalPractitioner) {
