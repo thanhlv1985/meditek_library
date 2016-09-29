@@ -2,7 +2,7 @@
  * Created by tannguyen on 29/09/2016.
  */
 var o=require("../services/HelperService");
-modules.exports = {
+module.exports = {
     isAdmin: function(req) {
         var isAdmin=false;
         if(o.checkData(req.user))
