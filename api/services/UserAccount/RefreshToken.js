@@ -402,8 +402,8 @@ module.exports={
 							$ne: null,
 							$gt: new Date(),
 						},
-						attributes: ['UID', 'SystemType', 'DeviceID', 'AppID', 'SecretCreatedAt']
 					},
+					attributes: ['UID', 'SystemType', 'DeviceID', 'AppID', 'SecretCreatedAt'],
 					transaction:transaction,
 				})
 				.then(function(rts){
