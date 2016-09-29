@@ -385,7 +385,75 @@ module.exports={
 			throw err;
 		});
 	},
-	
+
+
+	GetActiveRefreshToken: function(userUID, transaction) {
+		var error=new Error("GetActiveRefreshToken.Error");
+		return UserAccount.findOne({
+			where:{UID:userUID},
+			transaction:transaction,
+		})
+		.then(function(user){
+			if(user) {
+				return RefreshToken.findAll({
+					where:{
+						UserAccountID:user.ID,
+						RefreshCodeExpiredAt:{
+							$ne: null,
+							$gt: new Date(),
+						}
+					},
+					transaction:transaction,
+				})
+				.then(function(rts){
+					if(rts && rts.length>0) {
+						return rts;
+					} else {
+						return [];
+					}
+				}, function(err){
+					error.pushError("RefreshToken.selectError");
+					throw error;
+				})
+			} else {
+				error.pushError("UserAccount.notFound");
+				throw error;
+			}
+		}, function(err) {
+			error.pushError("UserAccount.selectError");
+			throw error;
+		})
+	},
+
+	RemoveSpecifyRefreshToken: function(refreshTokenUID, transaction) {
+		var error=new Error("RemoveSpecifyRefreshToken.Error");
+		return RefreshToken.findOne({
+			where: {UID: refreshTokenUID},
+			transaction: transaction
+		})
+		.then(function(rt){
+			if(rt) {
+				return RefreshToken.destroy({
+					where: {
+						UID: refreshTokenUID
+					},
+					transaction: transaction
+				})
+				.then(function(result){
+					RedisService.removeSessionConnect(rt.SessionKey);
+					return {status:'success'};
+				}, function(err){
+					error.pushError("refreshToken.deleteError");
+					throw error;
+				})
+			} else {
+				return {status:'refreshToken.notFound'};
+			}
+		}, function(err){
+			error.push("RefreshToken.queryError");
+			throw error;
+		})
+	},
 
 	UpdateStatus:function(userAccess, status, transaction)
 	{
