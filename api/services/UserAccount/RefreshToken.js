@@ -441,13 +441,13 @@ module.exports={
 				})
 				.then(function(result){
 					RedisService.removeSessionConnect(rt.SessionKey);
-					return {status:'success'};
+					return {status:'success', msg:'deteted'};
 				}, function(err){
 					error.pushError("refreshToken.deleteError");
 					throw error;
 				})
 			} else {
-				return {status:'refreshToken.notFound'};
+				return {status: 'success', msg:'refreshToken not found'};
 			}
 		}, function(err){
 			error.push("RefreshToken.queryError");
