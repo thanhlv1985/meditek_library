@@ -175,7 +175,7 @@ module.exports = {
         authTokenExpired: {//second
             'IOS': 60 * (24 * 60 * 60), // ~ 60 days
             'ARD': 60 * (24 * 60 * 60), // ~ 60 days
-            'WEB':  2 * 60 * 60, // ~ 2 hours
+            'WEB': 60 * (24 * 60 * 60), // ~ 60 days
         },
         
         refreshCodeExpiration: { 
@@ -250,31 +250,38 @@ module.exports = {
 
             'WEB':{
                 'ADMIN':{
-                    expiresIn:12 * 60 * 60, // ~12 hours
+                    //expiresIn:12 * 60 * 60, // ~12 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'ASSISTANT':{
-                    expiresIn:12 * 60 * 60, // ~12 hours
+                    //expiresIn:12 * 60 * 60, // ~12 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'INTERNAL_PRACTITIONER':{
-                    expiresIn:12 * 60 * 60, // ~12 hours
+                    //expiresIn:12 * 60 * 60, // ~12 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'EXTERTAL_PRACTITIONER':{
-                    expiresIn:2 * 60 * 60, // ~2 hours
+                    //expiresIn:2 * 60 * 60, // ~2 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'PATIENT':{
-                    expiresIn:2 * 60 * 60, // ~2 hours
+                    //expiresIn:2 * 60 * 60, // ~2 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'CLINIC_TELEHEALTH':{
-                    expiresIn:2 * 60 * 60, // ~2 hours
+                    //expiresIn:2 * 60 * 60, // ~2 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'ORGANIZATION':{
-                    expiresIn:2 * 60 * 60, // ~2 hours
+                    //expiresIn:2 * 60 * 60, // ~2 hours
+					expiresIn: 60 * (24 * 60 * 60), // ~ 60 days
                 },
 
                 'null':{
