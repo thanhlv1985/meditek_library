@@ -6,7 +6,9 @@
 var o = require("./HelperService");
 var $q = require("q");
 var redis = require("redis");
-var client = redis.createClient(6378, 'redis');
+//var client = redis.createClient(6378, 'redis');
+//var client = redis.createClient(6378, '115.79.192.205', 'redis');
+var client = redis.createClient(6378, 'redis6378.jozjfj.ng.0001.apse2.cache.amazonaws.com', 'redis');
 client.on("error", function(err) {
     console.log("REDIS ERROR", err);
 });

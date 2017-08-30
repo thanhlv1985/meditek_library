@@ -1,21 +1,83 @@
 {
+  "_args": [
+    [
+      {
+        "raw": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+        "spec": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "bitbucket",
+          "ssh": "git@bitbucket.org:meditekdevsteam/mediteklibrary.git",
+          "sshUrl": "git+ssh://git@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+          "httpsUrl": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+          "shortcut": "bitbucket:meditekdevsteam/mediteklibrary",
+          "directUrl": "https://bitbucket.org/meditekdevsteam/mediteklibrary/raw/master/package.json"
+        }
+      },
+      "/Users/thanhle/Documents/MeditekSource/core"
+    ]
+  ],
+  "_from": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+  "_id": "meditek_library@0.0.50",
+  "_inCache": true,
+  "_location": "/meditek_library",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+    "spec": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "bitbucket",
+      "ssh": "git@bitbucket.org:meditekdevsteam/mediteklibrary.git",
+      "sshUrl": "git+ssh://git@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+      "httpsUrl": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+      "shortcut": "bitbucket:meditekdevsteam/mediteklibrary",
+      "directUrl": "https://bitbucket.org/meditekdevsteam/mediteklibrary/raw/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git#96698aec820a37e87e2758c4c07fdb9a819a65c4",
+  "_shasum": "0fa641c5775224f46d9ea5260eaa375d69fc60a4",
+  "_shrinkwrap": {
     "name": "meditek_library",
-    "private": true,
-    "version": "0.0.50",
-    "description": "a Sails application",
-    "keywords": [],
-    "dependencies": {
-
-    },
-    "scripts": {
-        "debug": "node debug app.js",
-        "start": "node app.js"
-    },
-    "main": "app.js",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
-    },
-    "author": "anonymous node/sails user",
-    "license": ""
+    "version": "0.0.14",
+    "dependencies": {}
+  },
+  "_spec": "git+https://meditek_llc:2eVTnF2RcXzECLXvBA7y@bitbucket.org/meditekdevsteam/mediteklibrary.git",
+  "_where": "/Users/thanhle/Documents/MeditekSource/core",
+  "author": {
+    "name": "anonymous node/sails user"
+  },
+  "dependencies": {},
+  "description": "a Sails application",
+  "devDependencies": {},
+  "gitHead": "96698aec820a37e87e2758c4c07fdb9a819a65c4",
+  "keywords": [],
+  "license": "",
+  "main": "app.js",
+  "name": "meditek_library",
+  "optionalDependencies": {},
+  "private": true,
+  "readme": "# RedimedProject\n\na [Sails](http://sailsjs.org) application\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/anonymous node/sails user/RedimedProject.git"
+  },
+  "scripts": {
+    "debug": "node debug app.js",
+    "start": "node app.js"
+  },
+  "version": "0.0.50"
 }

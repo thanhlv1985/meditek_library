@@ -93,24 +93,84 @@ module.exports = function(data, primaryKeyModel) {
                                 if (keySearch === 'FullName') {
                                     var arraySearch = search[keyModel][keySearch].split(' ');
                                     var arraySearchObject = [];
+                                    var searchFirstName = [];
+                                    var searchMiddleName = [];
+                                    var searchLastName = [];
                                     arraySearch.forEach(function(value, index) {
-                                        arraySearchObject.push({
-                                            '$like': '%' + value + '%'
-                                        });
-                                    });
-                                    tempSearch = {
-                                        '$or': {
-                                            FirstName: {
-                                                '$or': arraySearchObject
-                                            },
-                                            MiddleName: {
-                                                '$or': arraySearchObject
-                                            },
-                                            LastName: {
-                                                '$or': arraySearchObject
+                                        if (arraySearch.length == 1) {
+                                            searchFirstName.push({ '$like': '%' + value + '%' });
+                                            searchMiddleName.push({ '$like': '%' + value + '%' });
+                                            searchLastName.push({ '$like': '%' + value + '%' });
+                                            tempSearch = {
+                                                '$or': {
+                                                    FirstName: {
+                                                        '$or': searchFirstName
+                                                            //'$like': '%' + search[keyModel][keySearch] + '%'
+                                                    },
+                                                    MiddleName: {
+                                                        '$or': searchMiddleName
+                                                            //'$like': '%' + search[keyModel][keySearch] + '%'
+                                                    },
+                                                    LastName: {
+                                                        '$or': searchLastName
+                                                            //'$like': '%' + search[keyModel][keySearch] + '%'
+                                                    }
+                                                }
+                                            };
+                                        } else
+                                        if (arraySearch.length == 2) {
+                                            if (index == 0) {
+                                                searchFirstName.push({ '$like': '%' + value + '%' });
+                                            } else {
+                                                searchLastName.push({ '$like': '%' + value + '%' });
                                             }
-                                        }
-                                    };
+                                            tempSearch = {
+                                                '$and': {
+                                                    FirstName: {
+                                                        '$and': searchFirstName
+                                                            //'$like': '%' + search[keyModel][keySearch] + '%'
+                                                    },
+                                                    LastName: {
+                                                        '$and': searchLastName
+                                                            //'$like': '%' + search[keyModel][keySearch] + '%'
+                                                    }
+                                                }
+                                            };
+                                            // }else if(if (arraySearch.length > 2)){
+                                            //     if (index == 0){
+                                            //         searchFirstName.push({'$like': '%' + value + '%'});
+                                            //     }else{
+                                            //         searchLastName.push({'$like': '%' + value + '%'});
+                                            //     }
+                                            //     //searchFirstName.push({'$like': '%' + value + '%'});
+                                            //     //searchMiddleName.push({'$like': '%' + value + '%'});
+                                            //     //searchLastName.push({'$like': '%' + value + '%'});
+                                            // }
+                                            // arraySearchObject.push({
+                                            //     '$like': '%' + value + '%'
+                                            // });
+                                        };
+                                    });
+                                    //console.log("Combine >>>>>>>>>> ", Sequelize.fn("concat", Sequelize.col("FirstName"), Sequelize.col("LastName")));
+                                    // tempSearch[Sequelize.fn("concat", Sequelize.col("FirstName"), Sequelize.col("LastName"))] = {
+                                    //     '$like': '%' + search[keyModel][keySearch] + '%'
+                                    // };
+                                    // tempSearch = {
+                                    //     '$or': {
+                                    //         FirstName: {
+                                    //             '$or': arraySearchObject
+                                    //                 //'$like': '%' + search[keyModel][keySearch] + '%'
+                                    //         },
+                                    //         MiddleName: {
+                                    //             '$or': arraySearchObject
+                                    //                 //'$like': '%' + search[keyModel][keySearch] + '%'
+                                    //         },
+                                    //         LastName: {
+                                    //             '$or': arraySearchObject
+                                    //                 //'$like': '%' + search[keyModel][keySearch] + '%'
+                                    //         }
+                                    //     }
+                                    // };
 
                                 } else {
                                     //case normal
