@@ -16,7 +16,7 @@ var redis = require("redis");
 
 var client = redis.createClient({ host: 'redis6378.jozjfj.ng.0001.apse2.cache.amazonaws.com', port: 6378 });
 //var redisClient = redis.createClient({host : 'localhost', port : 6379});
-
+console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>> Redis loading ...");
 client.on('ready', function() {
     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>> Redis is ready");
 });
