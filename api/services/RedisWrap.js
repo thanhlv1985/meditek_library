@@ -3,16 +3,28 @@
 // client.on("error", function (err) {
 //     console.log("Error " + err);
 // });
+
 var o = require("./HelperService");
 var $q = require("q");
 var redis = require("redis");
-//var client = redis.createClient(6378, 'redis');
-//var client = redis.createClient(6378, '115.79.192.205', 'redis');
 //var client = redis.createClient(6378, 'redis6378.jozjfj.ng.0001.apse2.cache.amazonaws.com', 'redis');
-var client = redis.createClient({
-    host: 'redis6378.jozjfj.ng.0001.apse2.cache.amazonaws.com',
-    port: 6378
+//var client = redis.createClient(6378, '115.79.192.205', 'redis');
+// var client = redis.createClient({
+//     host: '115.79.192.205',
+//     port: 6378
+// });
+
+var client = redis.createClient({ host: 'redis6378.jozjfj.ng.0001.apse2.cache.amazonaws.com', port: 6378 });
+//var redisClient = redis.createClient({host : 'localhost', port : 6379});
+
+client.on('ready', function() {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>> Redis is ready");
 });
+
+client.on('error', function() {
+    console.log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Error in Redis");
+});
+
 client.on("error", function(err) {
     console.log("REDIS ERROR", err);
 });
